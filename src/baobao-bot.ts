@@ -42,7 +42,8 @@ function onLogout(user: Contact) {
 }
 
 async function onMessage(message: Message) {
-  if (!message.text().startsWith("#")) return
+  // 烦躁特殊处理
+  if (!message.text().startsWith("#") && message.text() !== "烦躁") return
   MessageHandler.getInstance().handleMessage(message)
 }
 
@@ -96,6 +97,12 @@ function main() {
     schedule.scheduleJob(config.HOUSE_JOB, async () => {
       const qun = await bot.Room.find({ topic: item.ID })
       qun?.say("#house")
+    })
+
+    // 定时ding一下
+    schedule.scheduleJob(config.HOUSE_JOB, async () => {
+      const qun = await bot.Room.find({ topic: "小号群" })
+      qun?.say("#ding")
     })
   })
 }

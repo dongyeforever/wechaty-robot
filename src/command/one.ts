@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import ICommand from './command'
-import { Message, } from 'wechaty'
+import { Message } from 'wechaty'
 
 /**
 * one查询

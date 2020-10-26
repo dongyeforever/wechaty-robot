@@ -1,13 +1,15 @@
 import {
   // Contact,
   Message,
-  log,
+  log
 } from 'wechaty'
 import ICommand from './command/command'
 import WeatherCommand from './command/weather'
 import OneCommand from './command/one'
 import RemindCommand from './command/remind'
 import HouseCommand from './command/house'
+import ChpCommand from './command/caihongpi'
+import DjtCommand from './command/dujitang'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -15,11 +17,16 @@ export default class MessageHandler {
 
   private constructor() {
     this.map = new Map()
-    this.map.set("#remind", new RemindCommand())
-    this.map.set("#提醒", new RemindCommand())
+    const remindCommand = new RemindCommand()
+    const chpCommand = new ChpCommand()
+    this.map.set("#remind", remindCommand)
+    this.map.set("#提醒", remindCommand)
     this.map.set("#weather", new WeatherCommand())
     this.map.set("#one", new OneCommand())
     this.map.set("#house", new HouseCommand())
+    this.map.set("#caihongpi", chpCommand)
+    this.map.set("烦躁", chpCommand)
+    this.map.set("#dujitang", new DjtCommand())
   }
 
   public static getInstance() {
@@ -37,7 +44,7 @@ export default class MessageHandler {
     log.info('MessageHandler', message.room())
     log.info('MessageHandler', message.text())
     log.info('MessageHandler', '--------------------------------------------------------------------')
-    
+
     const text = message.text().split(" ")[0]
     const command = this.map.get(text)
     command?.execute(message)
