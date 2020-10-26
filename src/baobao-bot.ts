@@ -82,9 +82,6 @@ function main() {
   // log.infoStarterBot `${baobao?.id}-${baobao?.name()}`)
   // 查找群组
   config.GROUP_LIST.forEach(async item => {
-    const qun = await bot.Room.find({ topic: item.ID })
-    qun?.say("#house")
-
     // 定时任务
     const rule = new schedule.RecurrenceRule()
     rule.hour = [7, 23]
@@ -95,6 +92,7 @@ function main() {
       qun?.say("#weather")
     })
 
+    // 房源
     schedule.scheduleJob(config.HOUSE_JOB, async () => {
       const qun = await bot.Room.find({ topic: item.ID })
       qun?.say("#house")

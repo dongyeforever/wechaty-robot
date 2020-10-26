@@ -15,6 +15,27 @@ npm start
 
 > sudo apt-get install libx11-xcb1
 
+### 3 Command
+
+- 天气查询
+```sh
+#weather
+```
+- 房源查询（链家、我爱我家） 
+```sh
+#house
+```
+- 提醒
+```sh
+#remind 16:21 提醒内容 
+#remind 2020-10-21 16:21 提醒内容`
+#提醒 16:21 提醒内容 
+```
+- one
+```sh
+#one 
+```
+
 ## Thanks
 
 [wechaty](https://github.com/wechaty)
