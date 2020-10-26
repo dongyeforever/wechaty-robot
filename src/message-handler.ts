@@ -7,6 +7,7 @@ import ICommand from './command/command'
 import WeatherCommand from './command/weather'
 import OneCommand from './command/one'
 import RemindCommand from './command/remind'
+import HouseCommand from './command/house'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -18,6 +19,7 @@ export default class MessageHandler {
     this.map.set("#提醒", new RemindCommand())
     this.map.set("#weather", new WeatherCommand())
     this.map.set("#one", new OneCommand())
+    this.map.set("#house", new HouseCommand())
   }
 
   public static getInstance() {

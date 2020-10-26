@@ -11,7 +11,8 @@ npm install
 ```sh
 npm start
 ```
-> how to fix error: libx11-xcb.so.1 missing ?
+> how to fix error: libx11-xcb.so.1 missing?
+
 > sudo apt-get install libx11-xcb1
 
 ## Thanks
