@@ -9,7 +9,7 @@ npm install
 ### 2 Run the Bot
 
 ```sh
-npm start
+npm start &
 ```
 > how to fix error: libx11-xcb.so.1 missing?
 
@@ -53,4 +53,4 @@ npm start
 
 ## Copyright & License
 
-- Code released under the Apache-2.0 License
+Code released under the Apache-2.0 License
