@@ -1,4 +1,4 @@
-# Usage
+## Usage
 
 ### 1 Install Dependencies
 
@@ -54,4 +54,3 @@ npm start
 ## Copyright & License
 
 - Code released under the Apache-2.0 License
-- Docs released under Creative Commons
