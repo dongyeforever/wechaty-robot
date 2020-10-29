@@ -32,7 +32,7 @@ class LianHouse {
       if (address.indexOf("天通") !== -1 && address.indexOf("苑") !== -1) {
         const publicDate = target.find(".followInfo").text().split("/")[1].trim()
         const date = publicDate.split("发布")[0]
-        if (date == "刚刚" || date == "1天以前") {
+        if (date == "刚刚"/* || date == "1天以前"*/) {
           const title = target.find(".title a")
           const desc = target.find(".address .houseInfo").text()
           const price = target.find(".priceInfo .totalPrice span").text()
@@ -68,7 +68,7 @@ class I5House {
       if (address.indexOf("天通") !== -1 && address.indexOf("苑") !== -1) {
         const publicDate = target.find(".listX p").eq(2).text().split("·")[2].trim()
         const date = publicDate.split("发布")[0]
-        if (date == "今天" || date == "昨天") {
+        if (date == "今天"/* || date == "昨天"*/) {
           const title = target.find(".listTit a")
           const desc = target.find(".listX p").eq(0).text()
           const price = target.find(".jia strong").text()
