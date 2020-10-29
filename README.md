@@ -17,7 +17,7 @@ npm start &
 
 ### 3 Command
 
-- 天气查询
+- 天气查询（默认北京）
 ```sh
 #weather
 ```

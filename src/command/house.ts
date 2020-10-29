@@ -10,10 +10,12 @@ export default class HouseCommand implements ICommand {
 
   async execute(message: Message) {
     const lianjia = await new LianHouse().spider()
-    if (lianjia && lianjia.length !== 0) await message.say(lianjia)
+    if (lianjia.length !== 0) await message.say(lianjia)
 
     const i5jia = await new I5House().spider()
-    if (i5jia && i5jia.length !== 0)  await message.say(i5jia)
+    if (i5jia.length !== 0)  await message.say(i5jia)
+
+    if (lianjia.length === 0 && i5jia.length === 0) await message.say("今天未更新房源")
   }
 }
 
