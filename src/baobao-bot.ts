@@ -9,6 +9,7 @@ import {
   Wechaty,
   log,
 } from 'wechaty'
+// import { PuppetPadplus } from 'wechaty-puppet-padplus'
 import config from './config/index'
 import { generate } from 'qrcode-terminal'
 import MessageHandler from './message-handler'
@@ -62,8 +63,9 @@ const bot = new Wechaty({
    *  https://github.com/wechaty/wechaty-puppet/wiki/Directory
    */
 
-  // puppet: 'wechaty-puppet-hostie',
-
+  // puppet: new PuppetPadplus({
+  //   token: config.puppet_token
+  // })
 })
 
 bot.on('scan', onScan)
@@ -100,9 +102,9 @@ function main() {
     })
 
     // 定时ding一下
-    schedule.scheduleJob(config.HOUSE_JOB, async () => {
-      const qun = await bot.Room.find({ topic: "小号群" })
-      qun?.say("#ding")
-    })
+    // schedule.scheduleJob(config.HOUSE_JOB, async () => {
+    //   const qun = await bot.Room.find({ topic: "小号群" })
+    //   qun?.say("#ding")
+    // })
   })
 }

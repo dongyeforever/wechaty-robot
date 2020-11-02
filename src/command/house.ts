@@ -15,7 +15,7 @@ export default class HouseCommand implements ICommand {
     const i5jia = await new I5House().spider()
     if (i5jia.length !== 0)  await message.say(i5jia)
 
-    if (lianjia.length === 0 && i5jia.length === 0) await message.say("今天未更新房源")
+    if (lianjia.length === 0 && i5jia.length === 0) await message.say("链家和我爱我家今天未更新房源")
   }
 }
 
