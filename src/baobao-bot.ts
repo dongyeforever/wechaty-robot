@@ -83,28 +83,28 @@ bot.start()
 function main() {
   // const baobao = await bot.Contact.find({ alias: config.ALIAS })
   // log.infoStarterBot `${baobao?.id}-${baobao?.name()}`)
+
+  // g个人定时任务
+  executeSelfTask()
+
   // 查找群组
   config.GROUP_LIST.forEach(async item => {
-    // 定时任务
-    const rule = new schedule.RecurrenceRule()
-    rule.hour = [7, 23]
-    rule.minute = 0
-    rule.second = 0
-    schedule.scheduleJob(rule, async () => {
-      const qun = await bot.Room.find({ topic: item.ID })
-      qun?.say("#weather")
-    })
-
     // 房源
     schedule.scheduleJob(config.HOUSE_JOB, async () => {
-      const qun = await bot.Room.find({ topic: item.ID })
+      const qun = await bot.Room.find(item)
       qun?.say("#house")
     })
+  })
+}
 
-    // 定时ding一下
-    // schedule.scheduleJob(config.HOUSE_JOB, async () => {
-    //   const qun = await bot.Room.find({ topic: "小号群" })
-    //   qun?.say("#ding")
-    // })
+
+function executeSelfTask() {
+  const rule = new schedule.RecurrenceRule()
+  rule.hour = [7, 23]
+  rule.minute = 0
+  rule.second = 0
+  schedule.scheduleJob(rule, async () => {
+    const qun = await bot.Room.find(config.GROUP_LIST[0])
+    qun?.say("#weather")
   })
 }

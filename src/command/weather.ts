@@ -51,7 +51,7 @@ export default class WeatherCommand implements ICommand {
     }
     // 今天温差大提醒和雾霾
     if (highTemperature - lowTemperature >= 15) {
-      remind = '注意❣️❣️ 今天昼夜温差大于15℃\n'
+      remind = '\n注意❣️❣️ 今天昼夜温差大于15℃'
     }
     // 明天是否有雨雪
     const tomorrow = $('.wea_list li').eq(2)
@@ -62,11 +62,11 @@ export default class WeatherCommand implements ICommand {
     const tomorrowTemperature = `${tomorrowLow}℃ - ${tomorrowHigh}℃`
 
     if (tomorroWeather.indexOf('雨') !== -1 && tomorroWeather.indexOf('雪') !== -1) {
-      remind += '注意❣️❣️ 明天🌧 🌨'
+      remind += '\n注意❣️❣️ 明天🌧 🌨'
     } else if (tomorroWeather.indexOf('雨') !== -1) {
-      remind += '注意❣️❣️ 明天🌧 🌨'
+      remind += '\n注意❣️❣️ 明天🌧 🌨'
     } else if (tomorroWeather.indexOf('雪') !== -1) {
-      remind += '注意❣️❣️ 明天🌨'
+      remind += '\n注意❣️❣️ 明天🌨'
     }
     return `今天 ${week} ${weather} ${temperature} \n明天 ${tomorrowWeek} ${tomorroWeather} ${tomorrowTemperature} \n\n${text}\n${remind}`
   }

@@ -10,6 +10,7 @@ import RemindCommand from './command/remind'
 import HouseCommand from './command/house'
 import ChpCommand from './command/caihongpi'
 import DjtCommand from './command/dujitang'
+import GarbageCommand from './command/garbage'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -27,6 +28,7 @@ export default class MessageHandler {
     this.map.set("#caihongpi", chpCommand)
     this.map.set("烦躁", chpCommand)
     this.map.set("#dujitang", new DjtCommand())
+    this.map.set("#垃圾", new GarbageCommand())
   }
 
   public static getInstance() {

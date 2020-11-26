@@ -9,8 +9,6 @@
   "scripts": {
     "lint": "eslint \"src/*.ts\"",
     "start": "cross-env WECHATY_LOG=verbose node -r ts-node/register src/baobao-bot.ts",
-    "start:js": "cross-env WECHATY_LOG=verbose node src/ding-dong-bot.js",
-    "start:ts": "cross-env WECHATY_LOG=verbose node -r ts-node/register src/baobao-bot.ts",
     "test": "npm run lint && npm run test:version && npm run test:smoke",
     "test:smoke": "node tests/smoke-testing.js",
     "test:version": "check-node-version --node \">= 12\""
