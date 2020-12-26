@@ -9,7 +9,12 @@ export default class ChpCommand implements ICommand {
 
   async execute(message: Message) {
     const text = await new CaiHongPi().spider()
-    await message.say(text)
+    console.log("message", message)
+    if (message.to()) {
+      await message.to()?.say(text)
+    } else {
+      await message.say(text)
+    }
   }
 }
 

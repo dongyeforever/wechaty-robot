@@ -11,7 +11,11 @@ export default class GarbageCommand implements ICommand {
     const text = message.text()
     const garbage = text.split(' ')[1]
     const result = await new Garbage().spider(garbage)
-    await message.say(result)
+    if (message.to()) {
+      await message.to()?.say(result)
+    } else {
+      await message.say(result)
+    }
   }
 }
 

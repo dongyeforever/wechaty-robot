@@ -97,7 +97,6 @@ function main() {
   })
 }
 
-
 function executeSelfTask() {
   const rule = new schedule.RecurrenceRule()
   rule.hour = [7, 23]
