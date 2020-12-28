@@ -9,7 +9,7 @@ export default class DjtCommand implements ICommand {
 
   async execute(message: Message) {
     const text = await new DuJiTang().spider()
-    if (message.to()) {
+    if (message.to() && message.self()) {
       await message.to()?.say(text)
     } else {
       await message.say(text)

@@ -28,7 +28,7 @@ export default class RemindCommand implements ICommand {
     }
 
     async sayMessage(message: Message, text: string) {
-      if (message.to()) {
+      if (message.to() && message.self()) {
         await message.to()?.say(text)
       } else {
         await message.say(text)
