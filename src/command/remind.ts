@@ -22,7 +22,7 @@ export default class RemindCommand implements ICommand {
       this.sayMessage(message, `将会在 ${time} 给你发送提醒：👇\n\n${content}`)
       // 添加定时任务
       const task = new Task(time, () => {
-        this.sayMessage(message, content)
+        this.sayMessage(message, `收到一条提醒：👇\n\n${content}`)
       })
       Schedule.getInstance().add(task)
     }
