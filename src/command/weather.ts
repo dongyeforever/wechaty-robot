@@ -51,11 +51,11 @@ export default class WeatherCommand implements ICommand {
     const yesterdayLow = parseInt(yesterday.find('.tree strong').text(), 10)
     const yesterdayHigh = parseInt(yesterday.find('.tree b').text(), 10)
     if (Math.max(Math.abs(highTemperature - yesterdayHigh), Math.abs(lowTemperature - yesterdayLow)) >= 8) {
-      remind += `注意❣️❣️ ${highTemperature > yesterdayHigh ? '升温' : '降温'} ${Math.max(Math.abs(highTemperature - yesterdayHigh), Math.abs(lowTemperature - yesterdayLow))}℃\n`
+      remind += `\n注意❣️❣️ ${highTemperature > yesterdayHigh ? '升温' : '降温'} ${Math.max(Math.abs(highTemperature - yesterdayHigh), Math.abs(lowTemperature - yesterdayLow))}℃`
     }
     // 今天温差大提醒和雾霾
-    if (highTemperature - lowTemperature >= 10) {
-      remind = '\n注意❣️❣️ 今天昼夜温差大于10℃'
+    if (highTemperature - lowTemperature >= 12) {
+      remind = '\n注意❣️❣️ 今天昼夜温差大于12℃'
     }
     // 明天是否有雨雪
     const tomorrow = $('.wea_list li').eq(2)
