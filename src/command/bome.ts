@@ -13,6 +13,9 @@ export default class BomeCommand implements ICommand {
     let times = 5
     if (reg.test(timesStr)) {
       times = parseInt(timesStr)
+      if(times > 100) {
+        times = 100
+      }
     }
 
     for (let index = 0; index < times; index++) {
