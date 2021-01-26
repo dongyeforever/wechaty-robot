@@ -35,12 +35,10 @@ export default class BomeFixCommand implements ICommand {
       delayTimes.push(delayTime)
       setTimeout(() => {
         const number = Math.floor(Math.random() * 10)
-        if (number < 4) {
+        if (number < 5) {
           this.sayMessage(message, "[烟花]")
-        } else if (number < 8) {
-          this.sayMessage(message, "[庆祝]")
         } else {
-          this.sayMessage(message, "[炸弹]")
+          this.sayMessage(message, "[庆祝]")
         }
       }, delayTimes[index])
     }
