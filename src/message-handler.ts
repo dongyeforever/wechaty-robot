@@ -13,7 +13,7 @@ import DjtCommand from './command/dujitang'
 import GarbageCommand from './command/garbage'
 import FireworksCommand from './command/fireworks'
 import BomeCommand from './command/bome'
-import BomeFixCommand from './command/bome-fix'
+import FireworkMixCommand from './command/fireworks-mix'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -35,7 +35,7 @@ export default class MessageHandler {
     this.map.set("#垃圾", new GarbageCommand())
     this.map.set("#烟花", new FireworksCommand())
     this.map.set("#炸弹", new BomeCommand())
-    this.map.set("#都是炮", new BomeFixCommand())
+    this.map.set("#都是炮", new FireworkMixCommand())
   }
 
   public static getInstance() {

@@ -4,7 +4,7 @@ import { Message, } from 'wechaty'
 /**
 * 炸弹
 */
-export default class BomeFixCommand implements ICommand {
+export default class FireworkMixCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()
