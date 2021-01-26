@@ -44,7 +44,7 @@ function onLogout(user: Contact) {
 
 async function onMessage(message: Message) {
   // 烦躁特殊处理
-  if (!message.text().startsWith("#") && message.text() !== "烦躁") return
+  if (!message.text().startsWith("#") && message.text() !== "烦躁" && message.text() !== "烦") return
   MessageHandler.getInstance().handleMessage(message)
 }
 
@@ -84,7 +84,7 @@ function main() {
   // const baobao = await bot.Contact.find({ alias: config.ALIAS })
   // log.infoStarterBot `${baobao?.id}-${baobao?.name()}`)
 
-  // g个人定时任务
+  // 个人定时任务
   executeSelfTask()
 
   // 查找群组

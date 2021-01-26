@@ -11,6 +11,8 @@ import HouseCommand from './command/house'
 import ChpCommand from './command/caihongpi'
 import DjtCommand from './command/dujitang'
 import GarbageCommand from './command/garbage'
+import FireworksCommand from './command/fireworks'
+import BomeCommand from './command/bome'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -26,9 +28,12 @@ export default class MessageHandler {
     this.map.set("#one", new OneCommand())
     this.map.set("#house", new HouseCommand())
     this.map.set("#caihongpi", chpCommand)
+    this.map.set("烦", chpCommand)
     this.map.set("烦躁", chpCommand)
     this.map.set("#dujitang", new DjtCommand())
     this.map.set("#垃圾", new GarbageCommand())
+    this.map.set("#烟花", new FireworksCommand())
+    this.map.set("#炸弹", new BomeCommand())
   }
 
   public static getInstance() {
