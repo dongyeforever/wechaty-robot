@@ -2,7 +2,7 @@ import ICommand from './command'
 import { Message, } from 'wechaty'
 
 /**
-* 天气查询
+* 炸弹
 */
 export default class BomeCommand implements ICommand {
 
