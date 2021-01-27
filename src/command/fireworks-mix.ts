@@ -10,7 +10,7 @@ export default class FireworkMixCommand implements ICommand {
     const text = message.text()
     const timesStr = text.split(' ')[1]
     const reg = /^[0-9]+.?[0-9]*$/
-    let times = 5
+    let times = 10
     if (reg.test(timesStr)) {
       times = parseInt(timesStr)
       if (times > 100) {

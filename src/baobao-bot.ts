@@ -43,9 +43,24 @@ function onLogout(user: Contact) {
 }
 
 async function onMessage(message: Message) {
+  // 是否需要处理消息
+  if (needHandleMessage(message)) {
+    MessageHandler.getInstance().handleMessage(message)
+  }
+}
+
+function needHandleMessage(message: Message) {
   // 烦躁特殊处理
-  if (!message.text().startsWith("#") && message.text() !== "烦躁" && message.text() !== "烦") return
-  MessageHandler.getInstance().handleMessage(message)
+  if (message.text().startsWith("#")) {
+    return true
+  }
+  // 烦躁特殊处理
+  if(message.text() === "烦躁" || message.text() === "烦") {
+    return true
+  }
+  // 对新年祝福的处理
+  //  新年 新春 春节 + 快乐
+  return false
 }
 
 const bot = new Wechaty({
