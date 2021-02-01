@@ -21,7 +21,7 @@ export default class BomeCommand implements ICommand {
     for (let index = 0; index < times; index++) {
       setTimeout(() => {
         this.sayMessage(message, "[炸弹]")
-      }, index * 100)
+      }, index * 200)
     }
   }
 

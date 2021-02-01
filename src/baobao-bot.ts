@@ -12,8 +12,10 @@ import {
 // import { PuppetPadplus } from 'wechaty-puppet-padplus'
 import config from './config/index'
 import { generate } from 'qrcode-terminal'
-import MessageHandler from './message-handler'
 import schedule from 'node-schedule'
+import FilterManager from './filter/filter-manager'
+import CommandFilter from './filter/command-filter'
+import NewYearFilter from './filter/new-year-filter'
 
 // You can safely ignore the next line because it is using for CodeSandbox
 require('./.code-sandbox.js')
@@ -43,24 +45,7 @@ function onLogout(user: Contact) {
 }
 
 async function onMessage(message: Message) {
-  // 是否需要处理消息
-  if (needHandleMessage(message)) {
-    MessageHandler.getInstance().handleMessage(message)
-  }
-}
-
-function needHandleMessage(message: Message) {
-  // 烦躁特殊处理
-  if (message.text().startsWith("#")) {
-    return true
-  }
-  // 烦躁特殊处理
-  if(message.text() === "烦躁" || message.text() === "烦") {
-    return true
-  }
-  // 对新年祝福的处理
-  //  新年 新春 春节 + 快乐
-  return false
+  FilterManager.getInstance().filterMessage(message)
 }
 
 const bot = new Wechaty({
@@ -110,6 +95,10 @@ function main() {
       qun?.say("#house")
     })
   })
+
+  // 消息过滤器
+  FilterManager.getInstance().setFilter(new CommandFilter())
+  FilterManager.getInstance().setFilter(new NewYearFilter())
 }
 
 function executeSelfTask() {
