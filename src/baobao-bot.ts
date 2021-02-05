@@ -98,7 +98,7 @@ function main() {
 
   // 消息过滤器
   FilterManager.getInstance().setFilter(new CommandFilter())
-  FilterManager.getInstance().setFilter(new NewYearFilter())
+  // FilterManager.getInstance().setFilter(new NewYearFilter())
 }
 
 function executeSelfTask() {
