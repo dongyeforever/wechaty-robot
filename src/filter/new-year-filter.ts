@@ -7,7 +7,7 @@ export default class NewYearFilter implements IFilter {
         //  新年 新春 春节 + 快乐
         const text = message.text()
         // 如果不是春节附近 return false
-        if(!(this.isToday("2021-1-11") || this.isToday("2021-1-12"))) {
+        if(!(this.isToday("2021-2-11") || this.isToday("2021-2-12"))) {
             return false
         }
         if (!text.startsWith("#新年快乐") && this.contains(text, "快乐") &&
@@ -19,11 +19,11 @@ export default class NewYearFilter implements IFilter {
     }
 
     isToday(str: string){
-        const date = new Date();
-        var y = date.getFullYear(); // 年
-        var m = date.getMonth() + 1; // 月份从0开始的
-        var d = date.getDate(); //日
-        return str == (y + '-' + m + '-' + d);
+        const date = new Date()
+        var y = date.getFullYear() // 年
+        var m = date.getMonth() + 1 // 月份从0开始的
+        var d = date.getDate() //日
+        return str == (y + '-' + m + '-' + d)
     }
 
     contains(text: string, keywords: string): boolean {
