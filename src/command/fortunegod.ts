@@ -2,9 +2,9 @@ import ICommand from './command'
 import { Message, } from 'wechaty'
 
 /**
-* 炸弹
+* 爆竹
 */
-export default class FireworkMixCommand implements ICommand {
+export default class FortuneGodCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()
@@ -13,7 +13,7 @@ export default class FireworkMixCommand implements ICommand {
     let times = 10
     if (reg.test(timesStr)) {
       times = parseInt(timesStr)
-      if (times > 100) {
+      if(times > 100) {
         times = 100
       }
     }
@@ -34,16 +34,14 @@ export default class FireworkMixCommand implements ICommand {
       }
       delayTimes.push(delayTime)
       setTimeout(() => {
-        const number = Math.floor(Math.random() * 10)
-        if (number < 4) {
-          this.sayMessage(message, "[烟花]")
-        } else if (number < 7) {
-          this.sayMessage(message, "[庆祝]")
-        } else {
-          this.sayMessage(message, "[爆竹]")
-        }
+        this.sayMessage(message, "[爆竹]")
       }, delayTimes[index])
     }
+
+    setTimeout(() => {
+      this.sayMessage(message, "[烟花]")
+      this.sayMessage(message, "谢谢老板，财神到！")
+    }, delayTime + 800)
   }
 
   async sayMessage(message: Message, text: string) {

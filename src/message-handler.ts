@@ -15,6 +15,7 @@ import FireworksCommand from './command/fireworks'
 import BomeCommand from './command/bome'
 import FireworkMixCommand from './command/fireworks-mix'
 import NewYearCommand from './command/newyear'
+import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -38,6 +39,7 @@ export default class MessageHandler {
     this.map.set("#炸弹", new BomeCommand())
     this.map.set("#都是炮", new FireworkMixCommand())
     this.map.set("#新年快乐", new NewYearCommand())
+    this.map.set("#迎财神", new FortuneGodCommand())
   }
 
   public static getInstance() {

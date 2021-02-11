@@ -12,8 +12,6 @@ export default class NewYearFilter implements IFilter {
         }
         // 忽略群消息
         const room = message.room()
-        console.log("room:", room);
-        
         if (room) {
             return false
         }

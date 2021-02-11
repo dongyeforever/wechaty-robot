@@ -7,8 +7,8 @@ import { Message, } from 'wechaty'
 export default class NewYearCommand implements ICommand {
 
   async execute(message: Message) {
-    const msgArray = ["牛年大吉", "金牛贺岁", "[烟花]", "[庆祝]", "喜气牛牛", "牛转乾坤", "[烟花]", "[庆祝]",
-      "恭喜发财", "财源滚滚", "[烟花]", "[庆祝]", "招财进宝"]
+    const msgArray = ["牛年大吉", "金牛贺岁", "[烟花]", "[爆竹]", "喜气牛牛", "牛转乾坤", "[烟花]", "[爆竹]",
+      "恭喜发财", "财源滚滚", "[烟花]", "[爆竹]", "招财进宝"]
 
     const delayTimes = []
     let delayTime = 0
