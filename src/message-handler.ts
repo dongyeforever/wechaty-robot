@@ -14,7 +14,7 @@ import GarbageCommand from './command/garbage'
 import FireworksCommand from './command/fireworks'
 import BomeCommand from './command/bome'
 import FireworkMixCommand from './command/fireworks-mix'
-import NewYearCommand from './command/newyear'
+// import NewYearCommand from './command/newyear'
 import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
