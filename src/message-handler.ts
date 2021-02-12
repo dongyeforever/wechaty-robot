@@ -38,7 +38,7 @@ export default class MessageHandler {
     this.map.set("#烟花", new FireworksCommand())
     this.map.set("#炸弹", new BomeCommand())
     this.map.set("#都是炮", new FireworkMixCommand())
-    this.map.set("#新年快乐", new NewYearCommand())
+    // this.map.set("#新年快乐", new NewYearCommand())
     this.map.set("#迎财神", new FortuneGodCommand())
   }
 

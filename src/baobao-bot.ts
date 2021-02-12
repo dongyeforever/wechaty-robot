@@ -15,7 +15,7 @@ import { generate } from 'qrcode-terminal'
 import schedule from 'node-schedule'
 import FilterManager from './filter/filter-manager'
 import CommandFilter from './filter/command-filter'
-import NewYearFilter from './filter/new-year-filter'
+// import NewYearFilter from './filter/new-year-filter'
 
 // You can safely ignore the next line because it is using for CodeSandbox
 require('./.code-sandbox.js')
@@ -98,7 +98,7 @@ function main() {
 
   // 消息过滤器
   FilterManager.getInstance().setFilter(new CommandFilter())
-  FilterManager.getInstance().setFilter(new NewYearFilter())
+  // FilterManager.getInstance().setFilter(new NewYearFilter())
 }
 
 function executeSelfTask() {
