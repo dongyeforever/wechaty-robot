@@ -92,6 +92,7 @@ function main() {
     // 房源
     schedule.scheduleJob(config.HOUSE_JOB, async () => {
       const qun = await bot.Room.find(item)
+      
       qun?.say("#house")
     })
   })
