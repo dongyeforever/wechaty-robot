@@ -104,13 +104,13 @@ function executeSelfTask() {
   })
 
   // 查找群组
-  config.GROUP_LIST.forEach(async item => {
-    // 房源
-    schedule.scheduleJob(config.HOUSE_JOB, async () => {
-      const qun = await bot.Room.find(item)
-      qun?.say("#house")
-    })
-  })
+  // config.GROUP_LIST.forEach(async item => {
+  //   // 房源
+  //   schedule.scheduleJob(config.HOUSE_JOB, async () => {
+  //     const qun = await bot.Room.find(item)
+  //     qun?.say("#house")
+  //   })
+  // })
 }
 
 function executeFamilyTask() {
