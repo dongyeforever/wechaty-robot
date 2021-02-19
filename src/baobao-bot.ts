@@ -84,18 +84,9 @@ function main() {
   // const baobao = await bot.Contact.find({ alias: config.ALIAS })
   // log.infoStarterBot `${baobao?.id}-${baobao?.name()}`)
 
-  // 个人定时任务
+  // 定时任务
   executeSelfTask()
-
-  // 查找群组
-  config.GROUP_LIST.forEach(async item => {
-    // 房源
-    schedule.scheduleJob(config.HOUSE_JOB, async () => {
-      const qun = await bot.Room.find(item)
-      
-      qun?.say("#house")
-    })
-  })
+  executeFamilyTask()
 
   // 消息过滤器
   FilterManager.getInstance().setFilter(new CommandFilter())
@@ -110,5 +101,28 @@ function executeSelfTask() {
   schedule.scheduleJob(rule, async () => {
     const qun = await bot.Room.find(config.GROUP_LIST[0])
     qun?.say("#weather")
+  })
+
+  // 查找群组
+  config.GROUP_LIST.forEach(async item => {
+    // 房源
+    schedule.scheduleJob(config.HOUSE_JOB, async () => {
+      const qun = await bot.Room.find(item)
+      qun?.say("#house")
+    })
+  })
+}
+
+function executeFamilyTask() {
+  // 房源
+  schedule.scheduleJob(config.HOUSE_JOB, async () => {
+    const qunList = await bot.Room.findAll()
+    qunList.forEach(item => {
+      item.topic().then(topic => {
+        if (topic.indexOf(config.FAMILY_GROUP) !== -1) {
+          item.say("#house")
+        }
+      })
+    })
   })
 }
