@@ -81,9 +81,6 @@ bot.start()
 
 // 登录成功之后的事情
 function main() {
-  // const baobao = await bot.Contact.find({ alias: config.ALIAS })
-  // log.infoStarterBot `${baobao?.id}-${baobao?.name()}`)
-
   // 定时任务
   executeSelfTask()
   executeFamilyTask()
