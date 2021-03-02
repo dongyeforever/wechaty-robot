@@ -20,7 +20,8 @@ export default class ChpCommand implements ICommand {
 
 class CaiHongPi {
   // 彩虹屁
-  url = `https://lengzhishi.net/caihongpi/api.php`
+  // url = `https://lengzhishi.net/caihongpi/api.php`
+  url = `https://chp.shadiao.app/api.php`
 
   async spider() {
     const { data } = await axios.get(this.url)

@@ -19,12 +19,12 @@ export default class DjtCommand implements ICommand {
 
 class DuJiTang {
   // 毒鸡汤
-  url = `https://lengzhishi.net/dujitang/api.php`
+  // url = `https://lengzhishi.net/dujitang/api.php`
+  url = `https://du.shadiao.app/api.php`
 
   async spider() {
     const { data } = await axios.get(this.url)
-    const text = data.split('"')[1]
-    return text
+    return data
   }
 
 }
