@@ -11,7 +11,6 @@ export default class HouseCommand implements ICommand {
 
   async execute(message: Message) {
     const lianjia = await new LianHouse().spider()
-    console.log(lianjia);
 
     if (lianjia.length !== 0) await this.sayMessage(message, lianjia)
 

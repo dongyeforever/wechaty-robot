@@ -24,8 +24,6 @@ class Garbage {
   url = `https://api.66mz8.com/api/garbage.php?name=`
 
   async spider(garbage: String) {
-    console.log(garbage);
-
     const { data } = await axios.get(encodeURI(`${this.url}${garbage}`))
     if (data.code === 200) return `${garbage} -- ${data.data}`
     else return `${garbage} -- ${data.msg}`
