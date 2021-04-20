@@ -35,8 +35,8 @@ class LianHouse {
   url2 = `https://bj.lianjia.com/ershoufang/co32a2a3a4p3p4p5rs%E4%BA%9A%E8%BF%90%E6%9D%91/`
 
   async spider() {
-    // let listContent = await this.realSpider(this.url)
-    let listContent = await this.realSpider(this.url2)
+    let listContent = await this.realSpider(this.url)
+    listContent += await this.realSpider(this.url2)
     return listContent
   }
 
@@ -47,18 +47,15 @@ class LianHouse {
     let listContent = ''
     $('.sellListContent li').each(function (_, elem) {
       const target = $(elem).find(".info")
-      // const address = target.find(".flood .positionInfo a").text()
-      // if (address.indexOf("天通") !== -1 && address.indexOf("苑") !== -1) {
-        const publicDate = target.find(".followInfo").text().split("/")[1].trim()
-        const date = publicDate.split("发布")[0]
-        if (date == "刚刚" /* || date == "1天以前"*/) {
-          const title = target.find(".title a")
-          const desc = target.find(".address .houseInfo").text()
-          const price = target.find(".priceInfo .totalPrice span").text()
-          listContent += `${title.text()}(${date})\n\n${desc}\n${title.attr("href")}`
-          listContent += `\n------------------ ${price}万 ------------------\n\n`
-        }
-      // }
+      const publicDate = target.find(".followInfo").text().split("/")[1].trim()
+      const date = publicDate.split("发布")[0]
+      if (date == "刚刚" /* || date == "1天以前"*/) {
+        const title = target.find(".title a")
+        const desc = target.find(".address .houseInfo").text()
+        const price = target.find(".priceInfo .totalPrice span").text()
+        listContent += `${title.text()}(${date})\n\n${desc}\n${title.attr("href")}`
+        listContent += `\n------------------ ${price}万 ------------------\n\n`
+      }
     })
     return listContent
   }
@@ -87,22 +84,18 @@ class I5House {
 
     $('.pList li').each(function (_, elem) {
       const target = $(elem).find(".listCon")
-      // const address = target.find(".listX p").eq(1).text()
+      const publicDate = target.find(".listX p").eq(2).text().split("·")[2].trim()
+      const date = publicDate.split("发布")[0]
+      if (date == "今天" /* || date == "昨天"*/) {
+        const title = target.find(".listTit a")
+        const desc = target.find(".listX p").eq(0).text()
+        const price = target.find(".jia strong").text()
+        const imgUrl = $(elem).find(".listImg a").attr("href")
+        const url = `https://bj.5i5j.com${imgUrl}`
 
-      // if (address.indexOf("天通") !== -1 && address.indexOf("苑") !== -1) {
-        const publicDate = target.find(".listX p").eq(2).text().split("·")[2].trim()
-        const date = publicDate.split("发布")[0]
-        if (date == "今天" /* || date == "昨天"*/) {
-          const title = target.find(".listTit a")
-          const desc = target.find(".listX p").eq(0).text()
-          const price = target.find(".jia strong").text()
-          const imgUrl = $(elem).find(".listImg a").attr("href")
-          const url = `https://bj.5i5j.com${imgUrl}`
-
-          listContent += `${title.text()}(${date})\n\n${desc}\n${url}`
-          listContent += `\n------------------ ${price}万 ------------------\n\n`
-        }
-      // }
+        listContent += `${title.text()}(${date})\n\n${desc}\n${url}`
+        listContent += `\n------------------ ${price}万 ------------------\n\n`
+      }
     })
     return listContent
   }
