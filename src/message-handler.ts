@@ -15,6 +15,7 @@ import FireworksCommand from './command/fireworks'
 import BomeCommand from './command/bome'
 import FireworkMixCommand from './command/fireworks-mix'
 import TVCommand from './command/tv'
+import NBNHHSHCommand from './command/nbnhhsh'
 // import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
@@ -40,6 +41,7 @@ export default class MessageHandler {
     this.map.set("#都是炮", new FireworkMixCommand())
     // this.map.set("#迎财神", new FortuneGodCommand())
     this.map.set("#tv", new TVCommand())
+    this.map.set("#nbnhhsh", new NBNHHSHCommand())
   }
 
   public static getInstance() {
