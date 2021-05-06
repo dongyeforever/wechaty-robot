@@ -2,6 +2,7 @@ import ICommand from './command'
 import { Message, } from 'wechaty'
 import Schedule from '../util/schedule'
 import Task from '../util/task'
+import RemindStore from '../util/remind-store'
 
 /**
  * 提醒功能
@@ -30,9 +31,13 @@ export default class RemindCommand implements ICommand {
 
     const content = text.substring(text.indexOf(dateTime) + dateTime.length).trim()
     this.sayMessage(message, `将会在 ${dateTime} 给你发送提醒：👇\n${content}`)
+    // 存储消息
+    RemindStore.getInstance().add(dateTime, message)
     // 添加定时任务
     const task = new Task(dateTime, () => {
       this.sayMessage(message, `收到一条提醒：👇\n${content}`)
+      // 删除消息
+      RemindStore.getInstance().remove(dateTime)
     })
     Schedule.getInstance().add(task)
   }

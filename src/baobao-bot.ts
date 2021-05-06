@@ -15,7 +15,9 @@ import { generate } from 'qrcode-terminal'
 import schedule from 'node-schedule'
 import FilterManager from './filter/filter-manager'
 import CommandFilter from './filter/command-filter'
-
+import RemindStore from './util/remind-store'
+import Task from './util/task'
+import Schedule from './util/schedule'
 // You can safely ignore the next line because it is using for CodeSandbox
 require('./.code-sandbox.js')
 
@@ -86,6 +88,8 @@ function main() {
 
   // 消息过滤器
   FilterManager.getInstance().setFilter(new CommandFilter())
+  // 初始化提醒消息
+  initRemindTask()
 }
 
 function executeSelfTask() {
@@ -114,10 +118,40 @@ function executeFamilyTask() {
     const qunList = await bot.Room.findAll()
     qunList.forEach(item => {
       item.topic().then(topic => {
-        if (topic.indexOf(config.FAMILY_GROUP) !== -1) {
-          item.say("#house")
-        }
+        if (topic.indexOf(config.FAMILY_GROUP) !== -1) { item.say("#house") }
       })
     })
   })
+}
+
+// 初始化提醒
+function initRemindTask(this: any) {
+  const data = RemindStore.getInstance().getAll()
+  for (const key in data) {
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      const item = data[key]
+      let msgJson = JSON.parse(item)
+      const task = new Task(key, async () => {
+        sendMessage(msgJson)
+        RemindStore.getInstance().remove(key)
+      })
+      Schedule.getInstance().add(task)
+    }
+  }
+}
+
+async function sendMessage(msgJson: any) {
+  const payload = msgJson.payload
+  const roomId = payload.roomId
+  const text: string = payload.text
+  const content = `收到一条提醒：👇\n${text.substring(4)}`
+  if (roomId) {
+    // 群消息
+    let room = await bot.Room.find({ id: roomId })
+    room?.say(content)
+  } else {
+    let targetId = (payload.toId === bot.userSelf().id) ? payload.fromId : payload.toId
+    let contact: Contact | null = await bot.Contact.find({ id: targetId })
+    contact?.say(content)
+  }
 }
