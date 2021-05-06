@@ -1,13 +1,13 @@
 {
   "name": "wechaty-getting-started",
-  "version": "0.0.5-0",
+  "version": "0.0.4",
   "description": "Wechaty is a Conversational SDK for Chatbot Makers",
   "main": "src/baobao-bot.js",
   "engines": {
     "node": ">= 10"
   },
   "scripts": {
-    "lint": "",
+    "lint": "eslint \"src/*.ts\"",
     "start": "cross-env WECHATY_LOG=verbose node -r ts-node/register src/baobao-bot.ts",
     "test": "npm run lint && npm run test:version && npm run test:smoke",
     "test:smoke": "node tests/smoke-testing.js",
