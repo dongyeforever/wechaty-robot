@@ -15,9 +15,8 @@ export default class NBNHHSHCommand implements ICommand {
     const { data } = await axios.post(host, {
       text: nbnhhsh
     })
-    console.log(data)
     const trans = data[0].trans || []
-    this.sayMessage(message, `${nbnhhsh}\n${trans.join("\n")}`)
+    this.sayMessage(message, `【${nbnhhsh}】\n${trans.join("\n")}`)
   }
 
   async sayMessage(message: Message, text: string) {
