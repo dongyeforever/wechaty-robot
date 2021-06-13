@@ -112,16 +112,17 @@ function executeSelfTask() {
   // })
 }
 
+// 房源
 function executeFamilyTask() {
-  // 房源
-  schedule.scheduleJob(config.HOUSE_JOB, async () => {
-    const qunList = await bot.Room.findAll()
-    qunList.forEach(item => {
-      item.topic().then(topic => {
-        if (topic.indexOf(config.FAMILY_GROUP) !== -1) { item.say("#house") }
-      })
-    })
-  })
+  // 已买第一套房，临时关闭
+  // schedule.scheduleJob(config.HOUSE_JOB, async () => {
+  //   const qunList = await bot.Room.findAll()
+  //   qunList.forEach(item => {
+  //     item.topic().then(topic => {
+  //       if (topic.indexOf(config.FAMILY_GROUP) !== -1) { item.say("#house") }
+  //     })
+  //   })
+  // })
 }
 
 // 初始化提醒
