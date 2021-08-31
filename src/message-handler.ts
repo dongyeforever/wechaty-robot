@@ -41,7 +41,7 @@ export default class MessageHandler {
     this.map.set("#都是炮", new FireworkMixCommand())
     // this.map.set("#迎财神", new FortuneGodCommand())
     this.map.set("#tv", new TVCommand())
-    this.map.set("#nbnhhsh", new NBNHHSHCommand())
+    this.map.set("#hhsh", new NBNHHSHCommand())
   }
 
   public static getInstance() {

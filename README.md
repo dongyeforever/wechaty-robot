@@ -58,6 +58,11 @@ npm start &
 #都是炮 10
 ```
 
+- 能不能好好说话
+```sh
+#nbnhhsh yyds
+```
+
 ## Thanks
 
 [wechaty](https://github.com/wechaty)
