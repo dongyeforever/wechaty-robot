@@ -10,6 +10,11 @@ export default class NBNHHSHCommand implements ICommand {
   async execute(message: Message) {
     const text = message.text()
     const nbnhhsh = text.split(' ')[1]
+    const patten = new RegExp("[A-Za-Z]+")
+    if (!patten.test(nbnhhsh)) {
+      this.sayMessage(message, `格式为【#hhsh 英文缩写】`)
+      return
+    }
 
     const host = 'https://lab.magiconch.com/api/nbnhhsh/guess'
     const { data } = await axios.post(host, {
