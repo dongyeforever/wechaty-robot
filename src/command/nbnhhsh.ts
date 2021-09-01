@@ -11,7 +11,7 @@ export default class NBNHHSHCommand implements ICommand {
     const text = message.text()
     const nbnhhsh = text.split(' ')[1]
     const patten = /^[A-Za-z]+$/
-    if (nbnhhsh.match(patten) !== null) {
+    if (nbnhhsh.match(patten) == null) {
       this.sayMessage(message, `格式为【#hhsh 英文缩写】`)
       return
     }
