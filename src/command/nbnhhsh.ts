@@ -12,7 +12,7 @@ export default class NBNHHSHCommand implements ICommand {
     const nbnhhsh = text.split(' ')[1]
     const patten = /^[A-Za-z]+$/
     if (nbnhhsh.match(patten) == null) {
-      this.sayMessage(message, `格式为【#hhsh 英文缩写】`)
+      this.sayMessage(message, `格式【#hhsh 英文缩写】哦`)
       return
     }
 
