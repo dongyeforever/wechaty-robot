@@ -28,9 +28,12 @@ export default class LimitFriendFilter implements IFilter {
     }
 
     isLimitTime(): boolean {
-        const date = new Date()
-        const hour = date.getHours()
-        if (hour >= 7 && hour <= 21) {
+        const dateTime = new Date().getTime()
+        const start = new Date()
+        start.setHours(7)
+        const end = new Date()
+        end.setHours(21)
+        if (dateTime >= start.getTime() && dateTime <= end.getTime()) {
             return false
         }
         return true

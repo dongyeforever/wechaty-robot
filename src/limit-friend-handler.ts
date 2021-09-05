@@ -19,11 +19,14 @@ export default class LimitFriendHandler {
   public async handleMessage(message: Message) {
     log.info('LimitFriendHandler', message.toString())
     // 自动回复
-    switch (this.getRandomInt(2)) {
+    switch (this.getRandomInt(3)) {
       case 0:
-        message.say("[自动回复] 抱歉我现在有事不在")
+        message.say("[自动回复] 人工服务请按1")
         break;
       case 1:
+        message.say("[自动回复] 您的消息已送到对方已读就是不回")
+        break;
+      case 2:
         message.say("[自动回复] 回复技能冷却中")
         break;
     }
