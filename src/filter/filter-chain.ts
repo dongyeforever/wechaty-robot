@@ -14,7 +14,9 @@ export default class FilterChain {
 
     execute(message: Message) {
         for (let filter of this.filters) {
-            filter.execute(message)
+           if (filter.execute(message)) {
+               return
+           }
         }
     }
 }

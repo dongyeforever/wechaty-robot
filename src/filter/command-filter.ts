@@ -5,7 +5,7 @@ import MessageHandler from '../message-handler'
 export default class CommandFilter implements IFilter {
 
     execute(message: Message) {
-        // 烦躁特殊处理
+        // 命令处理
         if (message.text().startsWith("#")) {
             MessageHandler.getInstance().handleMessage(message)
             return true
