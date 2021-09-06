@@ -18,6 +18,13 @@ export default class LimitFriendHandler {
 
   public async handleMessage(message: Message) {
     log.info('LimitFriendHandler', message.toString())
+    // 自动回复消息不处理
+    if (message.text().startsWith("[自动回复]")) return
+    // TODO 自己的消息，撤回
+    // if (message.self()) {
+    //   await message.recall()
+    //   return
+    // }
     // 自动回复
     switch (this.getRandomInt(3)) {
       case 0:
@@ -32,7 +39,6 @@ export default class LimitFriendHandler {
     }
     //todo 机器人自动回复
     // const text = message.text()
-
   }
 
   getRandomInt(max: any) {

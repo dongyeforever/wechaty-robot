@@ -17,9 +17,10 @@ export default class LimitFriendFilter implements IFilter {
     isLimitFriend(message: Message): boolean {
         const data = LimitFriendStore.getInstance().getAll()
         const from = message.from()
+        const to = message.to()
         for (const key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
-                if (key === from?.id) {
+                if (key === from?.id || key === to?.id) {
                     return true
                 }
             }
@@ -30,7 +31,7 @@ export default class LimitFriendFilter implements IFilter {
     isLimitTime(): boolean {
         const dateTime = new Date().getTime()
         const start = new Date()
-        start.setHours(7)
+        start.setHours(13)
         const end = new Date()
         end.setHours(21)
         if (dateTime >= start.getTime() && dateTime <= end.getTime()) {
