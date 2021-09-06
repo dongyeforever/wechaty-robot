@@ -31,7 +31,7 @@ export default class LimitFriendFilter implements IFilter {
     isLimitTime(): boolean {
         const dateTime = new Date().getTime()
         const start = new Date()
-        start.setHours(13)
+        start.setHours(7)
         const end = new Date()
         end.setHours(21)
         if (dateTime >= start.getTime() && dateTime <= end.getTime()) {
