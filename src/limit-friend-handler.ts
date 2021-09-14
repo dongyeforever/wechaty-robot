@@ -3,6 +3,7 @@ import {
   Message,
   log
 } from 'wechaty'
+import axios from 'axios'
 
 export default class LimitFriendHandler {
   private static instance: LimitFriendHandler
@@ -19,29 +20,32 @@ export default class LimitFriendHandler {
   public async handleMessage(message: Message) {
     log.info('LimitFriendHandler', message.toString())
     // 自动回复消息不处理
-    if (message.text().startsWith("[自动回复]")) return
+    if (message.text().endsWith("#自动回复")) return
     // TODO 自己的消息，撤回
     // if (message.self()) {
     //   await message.recall()
     //   return
     // }
-    // 自动回复
-    switch (this.getRandomInt(3)) {
-      case 0:
-        message.say("[自动回复] 人工服务请按1")
-        break;
-      case 1:
-        message.say("[自动回复] 您的消息已送到对方已读就是不回")
-        break;
-      case 2:
-        message.say("[自动回复] 回复技能冷却中")
-        break;
-    }
-    //todo 机器人自动回复
-    // const text = message.text()
+
+    //机器人自动回复
+    this.autoReply(message).then(reply => {
+      message.say(`${reply} #自动回复`)
+    }).catch(e => {
+      console.log(e);
+    })
   }
 
-  getRandomInt(max: any) {
-    return Math.floor(Math.random() * max);
+  private async autoReply(message: Message) {
+    const url = 'http://api.ruyi.ai/v1/message'
+    const text = message.text()
+    const { data } = await axios.get(url, {
+      headers: { 'Content-Type': 'application/json' },
+      params: { 'q': text, 'user_id': '8e051663-f044-4c63-a1da-d23e28c9b8f1', 'app_key': '4c4be42e-527d-4c50-9a78-7c84d04d1e28' }
+    })
+
+    const outputs = data['result']['intents'][0]['outputs']
+    const reply = outputs[0]['property']['text']
+    return reply
   }
+
 }
