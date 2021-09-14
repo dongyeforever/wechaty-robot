@@ -1,6 +1,6 @@
 {
   "name": "wechaty-getting-started",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Wechaty is a Conversational SDK for Chatbot Makers",
   "main": "src/baobao-bot.js",
   "engines": {
