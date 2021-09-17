@@ -51,11 +51,11 @@ export default class WeatherCommand implements ICommand {
     const yesterdayLow = parseInt(yesterday.find('.tree strong').text(), 10)
     const yesterdayHigh = parseInt(yesterday.find('.tree b').text(), 10)
     if (Math.max(Math.abs(highTemperature - yesterdayHigh), Math.abs(lowTemperature - yesterdayLow)) >= 8) {
-      remind += `\n注意❣️❣️ ${highTemperature > yesterdayHigh ? '升温' : '降温'} ${Math.max(Math.abs(highTemperature - yesterdayHigh), Math.abs(lowTemperature - yesterdayLow))}℃`
+      remind += `\n注意[爱心][爱心] ${highTemperature > yesterdayHigh ? '升温' : '降温'} ${Math.max(Math.abs(highTemperature - yesterdayHigh), Math.abs(lowTemperature - yesterdayLow))}℃`
     }
     // 今天温差大提醒和雾霾
     if (highTemperature - lowTemperature >= 15) {
-      remind = '\n注意❣️❣️ 今天昼夜温差大于15℃'
+      remind = '\n注意[爱心][爱心] 今天昼夜温差大于15℃'
     }
     // 明天是否有雨雪
     const tomorrow = $('.wea_list li').eq(2)
@@ -66,11 +66,11 @@ export default class WeatherCommand implements ICommand {
     const tomorrowTemperature = `${tomorrowLow}℃ ~ ${tomorrowHigh}℃`
 
     if (tomorroWeather.indexOf('雨') !== -1 && tomorroWeather.indexOf('雪') !== -1) {
-      remind += '\n注意❣️❣️ 明天🌧 🌨'
+      remind += '\n注意[爱心][爱心] 明天🌧 🌨'
     } else if (tomorroWeather.indexOf('雨') !== -1) {
-      remind += '\n注意❣️❣️ 明天🌧 🌨'
+      remind += '\n注意[爱心][爱心] 明天🌧 🌨'
     } else if (tomorroWeather.indexOf('雪') !== -1) {
-      remind += '\n注意❣️❣️ 明天🌨'
+      remind += '\n注意[爱心][爱心] 明天🌨'
     }
     return `今天 ${week} ${weather} ${temperature} \n明天 ${tomorrowWeek} ${tomorroWeather} ${tomorrowTemperature} \n\n${text}\n${remind}`
   }
