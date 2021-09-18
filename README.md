@@ -11,7 +11,7 @@ npm install
 ### 2 Run the Bot
 
 ```sh
-npm start &
+npm start &!
 ```
 > how to fix error: libx11-xcb.so.1 missing?
 
@@ -58,9 +58,9 @@ npm start &
 #都是炮 10
 ```
 
-- 能不能好好说话
+- 好好说话
 ```sh
-#nbnhhsh yyds
+#hhsh yyds
 ```
 
 ## Thanks
