@@ -2,6 +2,7 @@ import ICommand from './command'
 import { Message, } from 'wechaty'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
+import StringUtil from '../util/string-util'
 
 /**
 * 天气查询
@@ -9,16 +10,19 @@ import * as cheerio from 'cheerio'
 export default class WeatherCommand implements ICommand {
 
   async execute(message: Message) {
-    const text = await new Weather().getWeather()
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
+    const weather = await new Weather().getWeather()
+    if (!StringUtil.isNull(weather.remind)) {
+      const text = `今天 ${weather.week} ${weather.weather} ${weather.temperature} \n明天 ${weather.tomorrowWeek} ${weather.tomorroWeather} ${weather.tomorrowTemperature} \n${weather.remind}`
+      if (message.to() && message.self()) {
+        await message.to()?.say(text)
+      } else {
+        await message.say(text)
+      }
     }
   }
 }
 
- class Weather {
+class Weather {
   // 墨迹天气地址
   url: string = `https://tianqi.moji.com/today/china`
 
@@ -42,7 +46,7 @@ export default class WeatherCommand implements ICommand {
     const lowTemperature = parseInt(target.find('.tree strong').text(), 10)
     const highTemperature = parseInt(target.find('.tree b').text(), 10)
     const temperature = `${lowTemperature}℃ ~ ${highTemperature}℃`
-    const text = $('.detail_ware_title span').text()
+    // const text = $('.detail_ware_title span').text()
 
     // 提醒
     let remind: string = ''
@@ -72,7 +76,16 @@ export default class WeatherCommand implements ICommand {
     } else if (tomorroWeather.indexOf('雪') !== -1) {
       remind += '\n注意[爱心][爱心] 明天🌨'
     }
-    return `今天 ${week} ${weather} ${temperature} \n明天 ${tomorrowWeek} ${tomorroWeather} ${tomorrowTemperature} \n\n${text}\n${remind}`
+
+    return {
+      week,
+      tomorrowWeek,
+      weather,
+      tomorroWeather,
+      temperature,
+      tomorrowTemperature,
+      remind
+    }
   }
 
 }

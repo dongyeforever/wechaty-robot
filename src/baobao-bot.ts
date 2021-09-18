@@ -150,7 +150,7 @@ async function sendMessage(msgJson: any) {
   const payload = msgJson.payload
   const roomId = payload.roomId
   const text: string = payload.text
-  const content = `收到一条提醒：👇\n${text.substring(4)}`
+  const content = `[爱心]提醒 \n• ${text.substring(4)}`
   if (roomId) {
     // 群消息
     let room = await bot.Room.find({ id: roomId })

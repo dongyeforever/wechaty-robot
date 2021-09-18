@@ -30,12 +30,12 @@ export default class RemindCommand implements ICommand {
     }
 
     const content = text.substring(text.indexOf(dateTime) + dateTime.length).trim()
-    this.sayMessage(message, `将会在 ${dateTime} 给你发送提醒：👇\n${content}`)
+    this.sayMessage(message, `[好的] 将会在 ${dateTime} 提醒你`)
     // 存储消息
     RemindStore.getInstance().add(dateTime, message)
     // 添加定时任务
     const task = new Task(dateTime, () => {
-      this.sayMessage(message, `收到提醒：👇\n${content}`)
+      this.sayMessage(message, `[爱心]提醒 \n• ${content}`)
       // 删除消息
       RemindStore.getInstance().remove(dateTime)
     })

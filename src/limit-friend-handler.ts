@@ -1,7 +1,6 @@
 import {
   // Contact,
-  Message,
-  log
+  Message
 } from 'wechaty'
 import axios from 'axios'
 
@@ -18,7 +17,6 @@ export default class LimitFriendHandler {
   }
 
   public async handleMessage(message: Message) {
-    log.info('LimitFriendHandler', message.toString())
     // 自动回复消息不处理
     // 13 撤回消息 MessageType.recall 
     if (message.type() === 13 || message.text().endsWith("#自动回复")) return
