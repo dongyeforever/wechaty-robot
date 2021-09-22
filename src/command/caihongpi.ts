@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ICommand from './command'
 import { Message } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 彩虹屁，哈哈哈
@@ -9,12 +10,7 @@ export default class ChpCommand implements ICommand {
 
   async execute(message: Message) {
     const text = await new CaiHongPi().spider()
-    console.log("message", message)
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
+    WechatHelper.sayMessage(text, message)
   }
 }
 

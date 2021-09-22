@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as cheerio from 'cheerio'
 import ICommand from './command'
 import { Message } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * one查询
@@ -10,11 +11,7 @@ export default class OneCommand implements ICommand {
 
   async execute(message: Message) {
     const text = await new One().spider()
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
+    WechatHelper.sayMessage(text, message)
   }
 }
 

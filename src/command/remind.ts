@@ -3,6 +3,7 @@ import { Message, } from 'wechaty'
 import Schedule from '../util/schedule'
 import Task from '../util/task'
 import RemindStore from '../util/remind-store'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
  * 提醒功能
@@ -24,29 +25,21 @@ export default class RemindCommand implements ICommand {
       if (realTime) {
         dateTime = realTime[0]
       } else {
-        this.sayMessage(message, "格式不识别，正确格式为：\n #remind 16:21 内容\n #remind 2020-10-21 16:21 内容")
+        WechatHelper.sayMessage("格式不识别，正确格式为：\n #remind 16:21 内容\n #remind 2020-10-21 16:21 内容", message)
         return
       }
     }
 
     const content = text.substring(text.indexOf(dateTime) + dateTime.length).trim()
-    this.sayMessage(message, `[好的] 将会在 ${dateTime} 提醒你`)
+    WechatHelper.sayMessage(`[好的] 将会在 ${dateTime} 提醒你`, message)
     // 存储消息
     RemindStore.getInstance().add(dateTime, message)
     // 添加定时任务
     const task = new Task(dateTime, () => {
-      this.sayMessage(message, `[爱心]提醒 \n• ${content}`)
+      WechatHelper.sayMessage(`[爱心]提醒 \n• ${content}`, message)
       // 删除消息
       RemindStore.getInstance().remove(dateTime)
     })
     Schedule.getInstance().add(task)
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
   }
 }

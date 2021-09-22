@@ -1,5 +1,6 @@
 import ICommand from './command'
 import { Message, } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 烟花
@@ -34,16 +35,8 @@ export default class FireworksCommand implements ICommand {
       }
       delayTimes.push(delayTime)
       setTimeout(() => {
-        this.sayMessage(message, "[烟花]")
+        WechatHelper.sayMessage("[烟花]", message)
       }, delayTimes[index])
-    }
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
     }
   }
 }

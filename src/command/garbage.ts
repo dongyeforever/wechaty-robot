@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ICommand from './command'
 import { Message } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 垃圾分类
@@ -11,11 +12,7 @@ export default class GarbageCommand implements ICommand {
     const text = message.text()
     const garbage = text.split(' ')[1]
     const result = await new Garbage().spider(garbage)
-    if (message.to() && message.self()) {
-      await message.to()?.say(result)
-    } else {
-      await message.say(result)
-    }
+    WechatHelper.sayMessage(result, message)
   }
 }
 

@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio'
 import ICommand from './command'
 import { Message, } from 'wechaty'
 import got from 'got'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 链家、我爱我家新房源查询
@@ -12,20 +13,12 @@ export default class HouseCommand implements ICommand {
   async execute(message: Message) {
     const lianjia = await new LianHouse().spider()
 
-    if (lianjia.length !== 0) await this.sayMessage(message, lianjia)
+    if (lianjia.length !== 0) await WechatHelper.sayMessage(lianjia, message)
 
     const _5i5j = await new I5House().spider()
-    if (_5i5j.length !== 0) await this.sayMessage(message, _5i5j)
+    if (_5i5j.length !== 0) await WechatHelper.sayMessage(_5i5j, message)
 
-    if (lianjia.length === 0 && _5i5j.length === 0) await this.sayMessage(message, "链家和我爱我家今天未更新房源")
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
+    if (lianjia.length === 0 && _5i5j.length === 0) await WechatHelper.sayMessage("链家和我爱我家今天未更新房源", message)
   }
 }
 
@@ -73,7 +66,6 @@ class I5House {
       return listContent
     } catch (error) {
       return ''
-      console.log(error.response.body);
     }
   }
 
@@ -98,13 +90,5 @@ class I5House {
       }
     })
     return listContent
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
   }
 }

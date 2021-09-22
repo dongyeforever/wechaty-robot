@@ -20,6 +20,7 @@ import Task from './util/task'
 import Schedule from './util/schedule'
 import LimitFriendFilter from './filter/limit-friend-filter'
 import UserManager from './manager/user-manager'
+// import BinanceManager from './manager/binance-manager'
 // You can safely ignore the next line because it is using for CodeSandbox
 require('./.code-sandbox.js')
 
@@ -98,6 +99,7 @@ function main() {
 }
 
 function executeSelfTask() {
+  // 天气
   const rule = new schedule.RecurrenceRule()
   rule.hour = [7, 23]
   rule.minute = 0
@@ -106,6 +108,10 @@ function executeSelfTask() {
     const qun = await bot.Room.find(config.GROUP_LIST[0])
     qun?.say("#weather")
   })
+
+  // binance 价格查询
+  // const binance = new BinanceManager()
+  // binance.start()
 
   // 查找群组
   // config.GROUP_LIST.forEach(async item => {

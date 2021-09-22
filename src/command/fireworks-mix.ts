@@ -1,5 +1,6 @@
 import ICommand from './command'
 import { Message, } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 炸弹
@@ -36,21 +37,13 @@ export default class FireworkMixCommand implements ICommand {
       setTimeout(() => {
         const number = Math.floor(Math.random() * 10)
         if (number < 4) {
-          this.sayMessage(message, "[烟花]")
+          WechatHelper.sayMessage("[烟花]", message)
         } else if (number < 7) {
-          this.sayMessage(message, "[庆祝]")
+          WechatHelper.sayMessage("[庆祝]", message)
         } else {
-          this.sayMessage(message, "[爆竹]")
+          WechatHelper.sayMessage("[爆竹]", message)
         }
       }, delayTimes[index])
-    }
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
     }
   }
 }

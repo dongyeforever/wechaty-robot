@@ -22,4 +22,13 @@ export default class UserManager {
         const user = await this.bot.Contact.find(userName)
         return user
     }
+
+    /**
+    * getSelf
+    */
+    public getSelf(): Promise<Contact | null> {
+        const selfId = this.bot.puppet.selfId()
+        return this.findUser(selfId)
+    }
+
 }

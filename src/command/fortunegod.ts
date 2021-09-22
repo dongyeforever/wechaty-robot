@@ -1,5 +1,6 @@
 import ICommand from './command'
 import { Message, } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 爆竹
@@ -34,21 +35,13 @@ export default class FortuneGodCommand implements ICommand {
       }
       delayTimes.push(delayTime)
       setTimeout(() => {
-        this.sayMessage(message, "[爆竹]")
+        WechatHelper.sayMessage("[爆竹]", message)
       }, delayTimes[index])
     }
 
     setTimeout(() => {
-      this.sayMessage(message, "[烟花]")
-      this.sayMessage(message, "谢谢老板，财神到！")
+      WechatHelper.sayMessage("[烟花]", message)
+      WechatHelper.sayMessage("谢谢老板，财神到！", message)
     }, delayTime + 800)
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
   }
 }

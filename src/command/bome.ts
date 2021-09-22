@@ -1,5 +1,6 @@
 import ICommand from './command'
-import { Message, } from 'wechaty'
+import { Message } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 炸弹
@@ -20,16 +21,8 @@ export default class BomeCommand implements ICommand {
 
     for (let index = 0; index < times; index++) {
       setTimeout(() => {
-        this.sayMessage(message, "[炸弹]")
+        WechatHelper.sayMessage("[炸弹]", message)
       }, index * 200)
-    }
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
     }
   }
 }

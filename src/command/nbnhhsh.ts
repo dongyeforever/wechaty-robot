@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ICommand from './command'
 import { Message } from 'wechaty'
+import WechatHelper from '../manager/wechat-helper'
 
 /**
 * 能不能好好说话
@@ -12,7 +13,7 @@ export default class NBNHHSHCommand implements ICommand {
     const nbnhhsh = text.split(' ')[1]
     const patten = /^[A-Za-z]+$/
     if (nbnhhsh.match(patten) == null) {
-      this.sayMessage(message, `格式【#hhsh 英文缩写】哦`)
+      WechatHelper.sayMessage(`格式【#hhsh 缩写字母】哦`, message)
       return
     }
 
@@ -21,14 +22,6 @@ export default class NBNHHSHCommand implements ICommand {
       text: nbnhhsh
     })
     const trans = data[0].trans || []
-    this.sayMessage(message, `【${nbnhhsh}】\n${trans.join("\n")}`)
-  }
-
-  async sayMessage(message: Message, text: string) {
-    if (message.to() && message.self()) {
-      await message.to()?.say(text)
-    } else {
-      await message.say(text)
-    }
+    WechatHelper.sayMessage(`【${nbnhhsh}】\n${trans.join("\n")}`, message)
   }
 }
