@@ -57,7 +57,7 @@ export default class BinanceManager {
         if (lastSymbol.lastPrice !== -1) {
             if (Math.abs(price - lastSymbol.lastPrice) >= PERCENT_MINUTE) {
                 const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice
-                WechatHelper.sayMessage(`${symbol} 最近一分钟涨幅: ${percent}`, null)
+                WechatHelper.sayMessage(`${symbol} 最近一分钟涨幅: ${percent}`)
             }
         }
         lastSymbol.lastPrice = price
@@ -71,7 +71,7 @@ export default class BinanceManager {
             if (lastSymbol.last15Price !== -1) {
                 if (Math.abs(price - lastSymbol.last15Price) >= PERCENT_15MINUTE) {
                     const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price
-                    WechatHelper.sayMessage(`${symbol} 最近 15 分钟涨幅: ${percent}`, null)
+                    WechatHelper.sayMessage(`${symbol} 最近 15 分钟涨幅: ${percent}`)
                 }
             }
         }

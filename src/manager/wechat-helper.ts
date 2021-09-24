@@ -5,7 +5,7 @@ import UserManager from "./user-manager"
 export default class WechatHelper {
 
     // 发消息
-    static async sayMessage(text: string, message: Message | null) {
+    static async sayMessage(text: string, message?: Message) {
         if (StringUtil.isNull(text)) return
         if (message) {
             // 根据 message 决定发送方和接收方
