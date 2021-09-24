@@ -49,7 +49,6 @@ export default class BinanceManager {
 
     private async requestMinute(symbol: string) {
         const { data } = await axios.get(`${apiPrice}?symbol=${symbol}`, { headers: header })
-        console.log(data);
 
         const price = parseFloat(data.price)
         // @ts-ignore7
