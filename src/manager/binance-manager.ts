@@ -3,19 +3,22 @@ import axios from 'axios'
 import WechatHelper from './wechat-helper'
 
 const API_KEY = 'MlKoeebWBron56ZfRqU2AMODIzUi1juAT9ocqD29xbk2zIprhB3n0otfk1MNaTWe'
-const host = 'https://api.binance.com'
+const host = 'https://api.lovek.vip/bitcoin'
 const PERCENT_DAY = 2 // 24h 涨幅
 const PERCENT_MINUTE = 0.15 // 每分钟涨幅
 const PERCENT_15MINUTE = 0.35 // 每 15 分钟涨幅
 const header = {
     "X-MBX-APIKEY": API_KEY
 }
-const api24h = `${host}/api/v3/ticker/24hr`
-const apiPrice = `${host}/api/v3/ticker/price`
+const api24h = `${host}/ticker/24hr`
+const apiPrice = `${host}/ticker/price`
 const symbols = ["BTCUSDT", "ETHUSDT"]
 
 export default class BinanceManager {
-    lastSymbols = {}
+    lastSymbols = {
+        BTCUSDT: { lastPrice: -1, last15Price: -1 },
+        ETHUSDT: { lastPrice: -1, last15Price: -1 },
+    }
 
     constructor() {
     }
@@ -46,21 +49,20 @@ export default class BinanceManager {
 
     private async requestMinute(symbol: string) {
         const { data } = await axios.get(`${apiPrice}?symbol=${symbol}`, { headers: header })
-        for (const item of data) {
-            const price = parseFloat(item.price)
-            const symbol = item.symbol
-            // @ts-ignore7
-            const lastSymbol = this.lastSymbols[symbol]
-            if (lastSymbol.lastPrice !== -1) {
-                if (Math.abs(price - lastSymbol.lastPrice) >= PERCENT_MINUTE) {
-                    const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice
-                    WechatHelper.sayMessage(`${item.symbol} 最近一分钟涨幅: ${percent}`, null)
-                }
+        console.log(data);
+
+        const price = parseFloat(data.price)
+        // @ts-ignore7
+        const lastSymbol = this.lastSymbols[symbol]
+        if (lastSymbol.lastPrice !== -1) {
+            if (Math.abs(price - lastSymbol.lastPrice) >= PERCENT_MINUTE) {
+                const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice
+                WechatHelper.sayMessage(`${symbol} 最近一分钟涨幅: ${percent}`, null)
             }
-            lastSymbol.lastPrice = price
-            // 每 15 分钟检查一次
-            this.check15Minute(lastSymbol, price, item.symbol)
         }
+        lastSymbol.lastPrice = price
+        // 每 15 分钟检查一次
+        this.check15Minute(lastSymbol, price, symbol)
     }
 
     private check15Minute(lastSymbol: any, price: number, symbol: string) {
