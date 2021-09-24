@@ -43,7 +43,7 @@ export default class BinanceManager {
         const percent = data.priceChangePercent
         // TODO 替换为今日涨幅
         if (Math.abs(percent) >= PERCENT_DAY) {
-            WechatHelper.sayMessage(`${data.symbol} 24h 涨幅: ${percent}`, null)
+            WechatHelper.sayMessage(`${data.symbol} 24h 涨幅: ${percent}`)
         }
     }
 
