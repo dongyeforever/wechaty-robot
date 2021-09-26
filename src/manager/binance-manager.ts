@@ -1,11 +1,11 @@
 import schedule from 'node-schedule'
 import axios from 'axios'
-import WechatHelper from './wechat-helper'
+// import WechatHelper from './wechat-helper'
 
 const API_KEY = 'MlKoeebWBron56ZfRqU2AMODIzUi1juAT9ocqD29xbk2zIprhB3n0otfk1MNaTWe'
 const host = 'https://api.lovek.vip/bitcoin'
-const PERCENT_DAY = 2 // 24h 涨幅
-const PERCENT_MINUTE = 0.15 // 每分钟涨幅
+const PERCENT_DAY = 3 // 24h 涨幅
+const PERCENT_MINUTE = 0.25 // 每分钟涨幅
 const PERCENT_15MINUTE = 0.35 // 每 15 分钟涨幅
 const header = {
     "X-MBX-APIKEY": API_KEY
@@ -43,7 +43,7 @@ export default class BinanceManager {
         const percent = data.priceChangePercent
         // TODO 替换为今日涨幅
         if (Math.abs(percent) >= PERCENT_DAY) {
-            WechatHelper.sayMessage(`${data.symbol} 24h 涨幅: ${percent}`)
+            this.pushMessage(`${data.symbol} 24h 涨幅: ${percent}`)
         }
     }
 
@@ -53,9 +53,9 @@ export default class BinanceManager {
         // @ts-ignore7
         const lastSymbol = this.lastSymbols[symbol]
         if (lastSymbol.lastPrice !== -1) {
-            const percent = Math.abs(price - lastSymbol.lastPrice) / lastSymbol.lastPrice * 100
-            if (percent >= PERCENT_MINUTE) {
-                WechatHelper.sayMessage(`${symbol} 最近一分钟涨幅: ${percent}`)
+            const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice * 100
+            if (Math.abs(percent) >= PERCENT_MINUTE) {
+                this.pushMessage(`${symbol} 最近一分钟涨幅: ${percent}`)
             }
         }
         lastSymbol.lastPrice = price
@@ -67,11 +67,20 @@ export default class BinanceManager {
         const date = new Date()
         if (date.getMinutes() === 15) {
             if (lastSymbol.last15Price !== -1) {
-                const percent = Math.abs(price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
-                if (percent >= PERCENT_15MINUTE) {
-                    WechatHelper.sayMessage(`${symbol} 最近 15 分钟涨幅: ${percent}`)
+                const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
+                if (Math.abs(percent) >= PERCENT_15MINUTE) {
+                    this.pushMessage(`${symbol} 最近 15 分钟涨幅: ${percent}`)
                 }
             }
+        }
+    }
+
+    // 发送提醒
+    private async pushMessage(message: string) {
+        // WechatHelper.sayMessage(message)
+        const { data } = await axios.get(`https://push.bot.qw360.cn/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=${message}`)
+        if (!data.status) {
+            console.log(data)
         }
     }
 }
