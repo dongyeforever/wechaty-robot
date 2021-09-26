@@ -2,7 +2,6 @@ import ICommand from './command'
 import { Message, } from 'wechaty'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-import StringUtil from '../util/string-util'
 import WechatHelper from '../manager/wechat-helper'
 
 /**
@@ -12,10 +11,8 @@ export default class WeatherCommand implements ICommand {
 
   async execute(message: Message) {
     const weather = await new Weather().getWeather()
-    if (!StringUtil.isNull(weather.remind)) {
-      const text = `今天 ${weather.week} ${weather.weather} ${weather.temperature} \n明天 ${weather.tomorrowWeek} ${weather.tomorroWeather} ${weather.tomorrowTemperature} \n${weather.remind}`
-      WechatHelper.sayMessage(text, message)
-    }
+    const text = `今天 ${weather.week} ${weather.weather} ${weather.temperature} \n明天 ${weather.tomorrowWeek} ${weather.tomorroWeather} ${weather.tomorrowTemperature} \n${weather.remind}`
+    WechatHelper.sayMessage(text, message)
   }
 }
 
