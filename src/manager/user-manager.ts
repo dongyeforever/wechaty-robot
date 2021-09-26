@@ -18,17 +18,17 @@ export default class UserManager {
         return this.instance
     }
 
-    public async findUser(userName: string): Promise<Contact | null> {
-        const user = await this.bot.Contact.find(userName)
+    public async findUser(search: string): Promise<Contact | null> {
+        const user = await this.bot.Contact.find(search)
         return user
     }
 
     /**
     * getSelf
     */
-    public getSelf(): Promise<Contact | null> {
-        const selfId = this.bot.puppet.selfId()
-        return this.findUser(selfId)
+    public async getSelf(): Promise<Contact | null> {
+        // 文件传输助手发送消息提示
+        return this.findUser('File Transfer')
     }
 
 }

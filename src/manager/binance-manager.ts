@@ -49,13 +49,12 @@ export default class BinanceManager {
 
     private async requestMinute(symbol: string) {
         const { data } = await axios.get(`${apiPrice}?symbol=${symbol}`, { headers: header })
-
         const price = parseFloat(data.price)
         // @ts-ignore7
         const lastSymbol = this.lastSymbols[symbol]
         if (lastSymbol.lastPrice !== -1) {
-            if (Math.abs(price - lastSymbol.lastPrice) >= PERCENT_MINUTE) {
-                const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice
+            const percent = Math.abs(price - lastSymbol.lastPrice) / lastSymbol.lastPrice * 100
+            if (percent >= PERCENT_MINUTE) {
                 WechatHelper.sayMessage(`${symbol} 最近一分钟涨幅: ${percent}`)
             }
         }
@@ -68,8 +67,8 @@ export default class BinanceManager {
         const date = new Date()
         if (date.getMinutes() === 15) {
             if (lastSymbol.last15Price !== -1) {
-                if (Math.abs(price - lastSymbol.last15Price) >= PERCENT_15MINUTE) {
-                    const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price
+                const percent = Math.abs(price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
+                if (percent >= PERCENT_15MINUTE) {
                     WechatHelper.sayMessage(`${symbol} 最近 15 分钟涨幅: ${percent}`)
                 }
             }
