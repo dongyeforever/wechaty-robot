@@ -1,6 +1,6 @@
 import schedule from 'node-schedule'
 import axios from 'axios'
-// import WechatHelper from './wechat-helper'
+import WechatHelper from './wechat-helper'
 
 const API_KEY = 'MlKoeebWBron56ZfRqU2AMODIzUi1juAT9ocqD29xbk2zIprhB3n0otfk1MNaTWe'
 const host = 'https://api.lovek.vip/bitcoin'
@@ -13,6 +13,12 @@ const header = {
 const api24h = `${host}/ticker/24hr`
 const apiPrice = `${host}/ticker/price`
 const symbols = ["BTCUSDT", "ETHUSDT"]
+// 推送时间类型
+enum PUSH_TYPE {
+    MINUTE = '1分钟',
+    QUARTER_HOUR = '15分钟',
+    HOUR = '1小时'
+}
 
 export default class BinanceManager {
     lastSymbols = {
@@ -43,7 +49,7 @@ export default class BinanceManager {
         const percent = data.priceChangePercent
         // TODO 替换为今日涨幅
         if (Math.abs(percent) >= PERCENT_DAY) {
-            this.pushMessage(`${data.symbol} 24h 涨幅: ${percent.toFixed(2)}`)
+            this.pushMessage(symbol, percent, PUSH_TYPE.HOUR)
         }
     }
 
@@ -55,7 +61,7 @@ export default class BinanceManager {
         if (lastSymbol.lastPrice !== -1) {
             const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice * 100
             if (Math.abs(percent) >= PERCENT_MINUTE) {
-                this.pushMessage(`${symbol} 最近一分钟涨幅: ${percent.toFixed(2)}`)
+                this.pushMessage(symbol, percent, PUSH_TYPE.MINUTE)
             }
         }
         lastSymbol.lastPrice = price
@@ -69,18 +75,18 @@ export default class BinanceManager {
             if (lastSymbol.last15Price !== -1) {
                 const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
                 if (Math.abs(percent) >= PERCENT_15MINUTE) {
-                    this.pushMessage(`${symbol} 最近 15 分钟涨幅: ${percent.toFixed(2)}`)
+                    this.pushMessage(symbol, percent, PUSH_TYPE.QUARTER_HOUR)
                 }
             }
         }
     }
 
     // 发送提醒
-    private async pushMessage(msg: string) {
-        // WechatHelper.sayMessage(message)
-        const { data } = await axios.get(`https://push.bot.qw360.cn/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=${encodeURI(msg)}`)
-        if (!data.status) {
-            console.log(data)
-        }
+    private async pushMessage(symbolStr: string, percent: Number, pushType: PUSH_TYPE) {
+        let symbol = symbolStr.replace('USDT', '').toLowerCase()
+        symbol = symbol.charAt(0).toUpperCase() + symbol.slice(1)
+        symbol = symbol.split('').reverse().join('')
+        const msg = `${symbol} 最近 ${pushType} : ${percent.toFixed(3)}%`
+        WechatHelper.pushMessage(msg)
     }
 }

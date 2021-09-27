@@ -1,3 +1,4 @@
+import axios from "axios"
 import { Message } from "wechaty"
 import StringUtil from "../util/string-util"
 import UserManager from "./user-manager"
@@ -19,6 +20,17 @@ export default class WechatHelper {
             UserManager.getInstance().getSelf().then(user => {
                 user?.say(text)
             })
+        }
+    }
+
+    /**
+     * 通过「推送精灵」推送消息
+     * @param msg 消息文本
+     */
+    static async pushMessage(msg: string) {
+        const { data } = await axios.get(`https://push.bot.qw360.cn/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=${encodeURI(msg)}`)
+        if (!data.status) {
+            console.log(data)
         }
     }
 
