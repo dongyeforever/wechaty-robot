@@ -43,7 +43,7 @@ export default class BinanceManager {
         const percent = data.priceChangePercent
         // TODO 替换为今日涨幅
         if (Math.abs(percent) >= PERCENT_DAY) {
-            this.pushMessage(`${data.symbol} 24h 涨幅: ${percent}`)
+            this.pushMessage(`${data.symbol} 24h 涨幅: ${percent.toFixed(2)}`)
         }
     }
 
@@ -55,7 +55,7 @@ export default class BinanceManager {
         if (lastSymbol.lastPrice !== -1) {
             const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice * 100
             if (Math.abs(percent) >= PERCENT_MINUTE) {
-                this.pushMessage(`${symbol} 最近一分钟涨幅: ${percent}`)
+                this.pushMessage(`${symbol} 最近一分钟涨幅: ${percent.toFixed(2)}`)
             }
         }
         lastSymbol.lastPrice = price
@@ -69,16 +69,16 @@ export default class BinanceManager {
             if (lastSymbol.last15Price !== -1) {
                 const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
                 if (Math.abs(percent) >= PERCENT_15MINUTE) {
-                    this.pushMessage(`${symbol} 最近 15 分钟涨幅: ${percent}`)
+                    this.pushMessage(`${symbol} 最近 15 分钟涨幅: ${percent.toFixed(2)}`)
                 }
             }
         }
     }
 
     // 发送提醒
-    private async pushMessage(message: string) {
+    private async pushMessage(msg: string) {
         // WechatHelper.sayMessage(message)
-        const { data } = await axios.get(`https://push.bot.qw360.cn/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=${message}`)
+        const { data } = await axios.get(`https://push.bot.qw360.cn/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=${encodeURI(msg)}`)
         if (!data.status) {
             console.log(data)
         }
