@@ -86,7 +86,7 @@ export default class BinanceManager {
         let symbol = symbolStr.replace('USDT', '').toLowerCase()
         symbol = symbol.charAt(0).toUpperCase() + symbol.slice(1)
         symbol = symbol.split('').reverse().join('')
-        const msg = `${symbol} 最近 ${pushType} : ${percent.toFixed(3)}%`
+        const msg = `${symbol} 最近 ${pushType} : ${percent.toFixed(2)}%`
         WechatHelper.pushMessage(msg)
     }
 }

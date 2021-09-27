@@ -21,6 +21,7 @@ import Schedule from './util/schedule'
 import LimitFriendFilter from './filter/limit-friend-filter'
 import UserManager from './manager/user-manager'
 import BinanceManager from './manager/binance-manager'
+import WechatHelper from './manager/wechat-helper'
 // You can safely ignore the next line because it is using for CodeSandbox
 require('./.code-sandbox.js')
 
@@ -166,4 +167,5 @@ async function sendMessage(msgJson: any) {
     let contact: Contact | null = await bot.Contact.find({ id: targetId })
     contact?.say(content)
   }
+  WechatHelper.pushMessage(content)
 }

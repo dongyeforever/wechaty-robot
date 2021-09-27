@@ -36,7 +36,10 @@ export default class RemindCommand implements ICommand {
     RemindStore.getInstance().add(dateTime, message)
     // 添加定时任务
     const task = new Task(dateTime, () => {
-      WechatHelper.sayMessage(`[爱心]提醒 \n• ${content}`, message)
+      const text = `[爱心]提醒 \n• ${content}`
+      WechatHelper.sayMessage(text, message)
+      WechatHelper.pushMessage(text)
+
       // 删除消息
       RemindStore.getInstance().remove(dateTime)
     })
