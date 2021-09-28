@@ -5,8 +5,8 @@ import WechatHelper from './wechat-helper'
 const API_KEY = 'MlKoeebWBron56ZfRqU2AMODIzUi1juAT9ocqD29xbk2zIprhB3n0otfk1MNaTWe'
 const host = 'https://api.lovek.vip/bitcoin'
 const PERCENT_DAY = 3 // 24h 涨幅
-const PERCENT_MINUTE = 0.25 // 每分钟涨幅
-const PERCENT_15MINUTE = 0.35 // 每 15 分钟涨幅
+const PERCENT_MINUTE = 0.3 // 每分钟涨幅
+const PERCENT_15MINUTE = 0.43 // 每 15 分钟涨幅
 const header = {
     "X-MBX-APIKEY": API_KEY
 }
@@ -19,6 +19,9 @@ enum PUSH_TYPE {
     QUARTER_HOUR = '15分钟',
     HOUR = '1小时'
 }
+// 英文字母
+// const alphabeta = 'a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷̷q̷r̷s̷t̷u̷vw̷x̷y̷z̷'
+const alphabeta = 'ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤvⓦⓧⓨⓩ'
 
 export default class BinanceManager {
     lastSymbols = {
@@ -71,22 +74,25 @@ export default class BinanceManager {
 
     private check15Minute(lastSymbol: any, price: number, symbol: string) {
         const date = new Date()
-        if (date.getMinutes() === 15) {
+        if (date.getMinutes() % 15 === 0) {
             if (lastSymbol.last15Price !== -1) {
                 const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
                 if (Math.abs(percent) >= PERCENT_15MINUTE) {
                     this.pushMessage(symbol, percent, PUSH_TYPE.QUARTER_HOUR)
                 }
             }
+            lastSymbol.last15Price = price
         }
     }
 
     // 发送提醒
     private async pushMessage(symbolStr: string, percent: Number, pushType: PUSH_TYPE) {
         let symbol = symbolStr.replace('USDT', '').toLowerCase()
-        symbol = symbol.charAt(0).toUpperCase() + symbol.slice(1)
-        symbol = symbol.split('').reverse().join('')
-        const msg = `${symbol} 最近 ${pushType} : ${percent.toFixed(2)}%`
+        const ab = Array.from(alphabeta)
+        for (const chars of symbol) {
+            symbol = symbol.replace(chars, ab[chars.charCodeAt(0) - 97])
+        }
+        const msg = `${symbol} 最近 ${pushType} : ${percent > 0 ? '+' : ''}${percent.toFixed(2)}%`
         WechatHelper.pushMessage(msg)
     }
 }
