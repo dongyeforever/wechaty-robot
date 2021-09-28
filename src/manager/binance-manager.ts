@@ -23,6 +23,13 @@ enum PUSH_TYPE {
 // const alphabeta = 'a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷̷q̷r̷s̷t̷u̷vw̷x̷y̷z̷'
 const alphabeta = 'ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤvⓦⓧⓨⓩ'
 
+interface PushMessage {
+    price?: number
+    symbol: string
+    percent: number
+    pushType: PUSH_TYPE
+}
+
 export default class BinanceManager {
     lastSymbols = {
         BTCUSDT: { lastPrice: -1, last15Price: -1 },
@@ -52,7 +59,7 @@ export default class BinanceManager {
         const percent = data.priceChangePercent
         // TODO 替换为今日涨幅
         if (Math.abs(percent) >= PERCENT_DAY) {
-            this.pushMessage(symbol, percent, PUSH_TYPE.HOUR)
+            this.pushMessage({ symbol, percent, pushType: PUSH_TYPE.HOUR })
         }
     }
 
@@ -64,7 +71,7 @@ export default class BinanceManager {
         if (lastSymbol.lastPrice !== -1) {
             const percent = (price - lastSymbol.lastPrice) / lastSymbol.lastPrice * 100
             if (Math.abs(percent) >= PERCENT_MINUTE) {
-                this.pushMessage(symbol, percent, PUSH_TYPE.MINUTE)
+                this.pushMessage({ price, symbol, percent, pushType: PUSH_TYPE.MINUTE })
             }
         }
         lastSymbol.lastPrice = price
@@ -78,7 +85,7 @@ export default class BinanceManager {
             if (lastSymbol.last15Price !== -1) {
                 const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
                 if (Math.abs(percent) >= PERCENT_15MINUTE) {
-                    this.pushMessage(symbol, percent, PUSH_TYPE.QUARTER_HOUR)
+                    this.pushMessage({ symbol, percent, price, pushType: PUSH_TYPE.QUARTER_HOUR })
                 }
             }
             lastSymbol.last15Price = price
@@ -86,13 +93,16 @@ export default class BinanceManager {
     }
 
     // 发送提醒
-    private async pushMessage(symbolStr: string, percent: Number, pushType: PUSH_TYPE) {
-        let symbol = symbolStr.replace('USDT', '').toLowerCase()
+    private async pushMessage(pushMessage: PushMessage) {
+        const message = Object.assign({}, pushMessage)
         const ab = Array.from(alphabeta)
+        let symbol = message.symbol.replace('USDT', '').toLowerCase()
         for (const chars of symbol) {
             symbol = symbol.replace(chars, ab[chars.charCodeAt(0) - 97])
         }
-        const msg = `${symbol} 最近 ${pushType} : ${percent > 0 ? '+' : ''}${percent.toFixed(2)}%`
+        const percent = `${message.percent > 0 ? '+' : '-'}${Math.abs(message.percent).toFixed(2)}%`
+        const price = message.price ? ` , ${message.price?.toFixed(2)}` : ''
+        let msg = `${symbol} 最近 ${message.pushType} : ${percent} ${price}`
         WechatHelper.pushMessage(msg)
     }
 }
