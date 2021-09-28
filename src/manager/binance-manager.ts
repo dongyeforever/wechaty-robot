@@ -4,7 +4,7 @@ import WechatHelper from './wechat-helper'
 
 const API_KEY = 'MlKoeebWBron56ZfRqU2AMODIzUi1juAT9ocqD29xbk2zIprhB3n0otfk1MNaTWe'
 const host = 'https://api.lovek.vip/bitcoin'
-const PERCENT_DAY = 3 // 24h 涨幅
+const PERCENT_DAY = 5 // 24h 涨幅
 const PERCENT_MINUTE = 0.3 // 每分钟涨幅
 const PERCENT_15MINUTE = 0.43 // 每 15 分钟涨幅
 const header = {
