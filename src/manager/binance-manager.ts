@@ -41,11 +41,11 @@ export default class BinanceManager {
 
     public start() {
         // 每小时检查一次 24h 价格变动
-        schedule.scheduleJob('0 0 * * * *', () => {
-            for (const item of symbols) {
-                this.request24h(item)
-            }
-        })
+        // schedule.scheduleJob('0 0 * * * *', () => {
+        //     for (const item of symbols) {
+        //         this.requestToday(item)
+        //     }
+        // })
         // 检查最近 1 分钟 价格变动
         schedule.scheduleJob('0 * * * * *', () => {
             for (const item of symbols) {
@@ -54,7 +54,7 @@ export default class BinanceManager {
         })
     }
 
-    private async request24h(symbol: string) {
+    private async requestToday(symbol: string) {
         const { data } = await axios.get(`${apiToday}?symbol=${symbol}`, { headers: header })
         const open = data.open
         const close = data.close
@@ -91,6 +91,8 @@ export default class BinanceManager {
                 }
             }
             lastSymbol.last15Price = price
+            // 每15分钟检查一次今日价格波动幅度
+            this.requestToday(symbol)
         }
     }
 
