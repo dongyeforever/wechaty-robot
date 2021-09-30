@@ -17,7 +17,7 @@ const symbols = ["BTCUSDT", "ETHUSDT"]
 enum PUSH_TYPE {
     MINUTE = '1分钟',
     QUARTER_HOUR = '15分钟',
-    HOUR = '1小时'
+    HOUR = '今天'
 }
 // 英文字母
 // const alphabeta = 'a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷̷q̷r̷s̷t̷u̷vw̷x̷y̷z̷'
@@ -106,7 +106,7 @@ export default class BinanceManager {
         }
         const percent = `${message.percent > 0 ? '⁺' : '⁻'}${Math.abs(message.percent).toFixed(2)}%`
         const price = message.price ? `#${Math.round(message.price)}` : ''
-        let msg = `${symbol}最近${message.pushType} ${percent} ${price}`
+        let msg = `${symbol} ${message.pushType} ${percent} ${price}`
         WechatHelper.pushMessage(msg)
     }
 }
