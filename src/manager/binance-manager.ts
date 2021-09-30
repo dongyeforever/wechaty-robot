@@ -5,12 +5,12 @@ import WechatHelper from './wechat-helper'
 const API_KEY = 'MlKoeebWBron56ZfRqU2AMODIzUi1juAT9ocqD29xbk2zIprhB3n0otfk1MNaTWe'
 const host = 'https://api.lovek.vip/bitcoin'
 const PERCENT_DAY = 5 // 24h 涨幅
-const PERCENT_MINUTE = 0.3 // 每分钟涨幅
-const PERCENT_15MINUTE = 0.43 // 每 15 分钟涨幅
+const PERCENT_MINUTE = 0.35 // 每分钟涨幅
+const PERCENT_15MINUTE = 0.68 // 每 15 分钟涨幅
 const header = {
     "X-MBX-APIKEY": API_KEY
 }
-const api24h = `${host}/ticker/24hr`
+const apiToday = `${host}/ticker/today`
 const apiPrice = `${host}/ticker/price`
 const symbols = ["BTCUSDT", "ETHUSDT"]
 // 推送时间类型
@@ -55,9 +55,11 @@ export default class BinanceManager {
     }
 
     private async request24h(symbol: string) {
-        const { data } = await axios.get(`${api24h}?symbol=${symbol}`, { headers: header })
-        const percent = data.priceChangePercent
-        // TODO 替换为今日涨幅
+        const { data } = await axios.get(`${apiToday}?symbol=${symbol}`, { headers: header })
+        const open = data.open
+        const close = data.close
+        const percent = (close - open) / open * 100
+        // 为今日涨幅
         if (Math.abs(percent) >= PERCENT_DAY) {
             this.pushMessage({ symbol, percent, pushType: PUSH_TYPE.HOUR })
         }
@@ -100,9 +102,9 @@ export default class BinanceManager {
         for (const chars of symbol) {
             symbol = symbol.replace(chars, ab[chars.charCodeAt(0) - 97])
         }
-        const percent = `${message.percent > 0 ? '+' : '-'}${Math.abs(message.percent).toFixed(2)}%`
-        const price = message.price ? ` , ${message.price?.toFixed(2)}` : ''
-        let msg = `${symbol} 最近 ${message.pushType} : ${percent} ${price}`
+        const percent = `${message.percent > 0 ? '⁺' : '⁻'}${Math.abs(message.percent).toFixed(2)}%`
+        const price = message.price ? `#${Math.round(message.price)}` : ''
+        let msg = `${symbol}最近${message.pushType} ${percent} ${price}`
         WechatHelper.pushMessage(msg)
     }
 }
