@@ -13,7 +13,7 @@ const header = {
 const apiToday = `${host}/ticker/today`
 const apiPrice = `${host}/ticker/price`
 const symbols = ["BTCUSDT", "ETHUSDT"]
-const otherSymbols = ["DOGEUSDT", "AAVEUSDT", "COMPUSDT", "SUSHIUSDT", "AVAXUSDT", "SOLUSDT", "FTMUSDT"]
+const otherSymbols = ["DOGEUSDT", "AAVEUSDT", "COMPUSDT", "SUSHIUSDT", "AVAXUSDT", "SOLUSDT", "FTMUSDT", "JUVUSDT"]
 // 推送时间类型
 enum PUSH_TYPE {
     MINUTE = '1分钟',
