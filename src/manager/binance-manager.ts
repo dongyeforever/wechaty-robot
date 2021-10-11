@@ -13,11 +13,12 @@ const header = {
 const apiToday = `${host}/ticker/today`
 const apiPrice = `${host}/ticker/price`
 const symbols = ["BTCUSDT", "ETHUSDT"]
+const otherSymbols = ["DOGEUSDT", "AAVEUSDT", "COMPUSDT", "SUSHIUSDT", "AVAXUSDT", "SOLUSDT", "FTMUSDT"]
 // 推送时间类型
 enum PUSH_TYPE {
     MINUTE = '1分钟',
     QUARTER_HOUR = '15分钟',
-    HOUR = '今天'
+    TODAY = '今天'
 }
 // 英文字母
 // const alphabeta = 'a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷̷q̷r̷s̷t̷u̷vw̷x̷y̷z̷'
@@ -54,17 +55,6 @@ export default class BinanceManager {
         })
     }
 
-    private async requestToday(symbol: string) {
-        const { data } = await axios.get(`${apiToday}?symbol=${symbol}`, { headers: header })
-        const open = data.open
-        const close = data.close
-        const percent = (close - open) / open * 100
-        // 为今日涨幅
-        if (Math.abs(percent) >= PERCENT_DAY) {
-            this.pushMessage({ symbol, percent, pushType: PUSH_TYPE.HOUR })
-        }
-    }
-
     private async requestMinute(symbol: string) {
         const { data } = await axios.get(`${apiPrice}?symbol=${symbol}`, { headers: header })
         const price = parseFloat(data.price)
@@ -77,22 +67,44 @@ export default class BinanceManager {
             }
         }
         lastSymbol.lastPrice = price
-        // 每 15 分钟检查一次
-        this.check15Minute(lastSymbol, price, symbol)
+
+        const date = new Date()
+        if (date.getMinutes() % 15 === 0) {
+            // 每 15 分钟检查一次
+            this.check15Minute(lastSymbol, price, symbol)
+        } else if (date.getMinutes() % 0 === 0) {
+            // 每小时检查一次小币种涨幅
+            this.checkOtherSymbol()
+        }
     }
 
     private check15Minute(lastSymbol: any, price: number, symbol: string) {
-        const date = new Date()
-        if (date.getMinutes() % 15 === 0) {
-            if (lastSymbol.last15Price !== -1) {
-                const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
-                if (Math.abs(percent) >= PERCENT_15MINUTE) {
-                    this.pushMessage({ symbol, percent, price, pushType: PUSH_TYPE.QUARTER_HOUR })
-                }
+        if (lastSymbol.last15Price !== -1) {
+            const percent = (price - lastSymbol.last15Price) / lastSymbol.last15Price * 100
+            if (Math.abs(percent) >= PERCENT_15MINUTE) {
+                this.pushMessage({ symbol, percent, price, pushType: PUSH_TYPE.QUARTER_HOUR })
             }
-            lastSymbol.last15Price = price
-            // 每15分钟检查一次今日价格波动幅度
-            this.requestToday(symbol)
+        }
+        lastSymbol.last15Price = price
+        // 每15分钟检查一次今日价格波动幅度
+        this.checkSymbol(symbol)
+    }
+
+    private async checkSymbol(symbol: string) {
+        const { data } = await axios.get(`${apiToday}?symbol=${symbol}`, { headers: header })
+        const open = data.open
+        const close = data.close
+        const percent = (close - open) / open * 100
+        // 为今日涨幅
+        if (Math.abs(percent) >= PERCENT_DAY) {
+            this.pushMessage({ symbol, percent, pushType: PUSH_TYPE.TODAY })
+        }
+    }
+
+    // 检查小币
+    private checkOtherSymbol() {
+        for (const symbol of otherSymbols) {
+            this.checkSymbol(symbol)
         }
     }
 

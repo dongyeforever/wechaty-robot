@@ -3,6 +3,9 @@ import { Message } from "wechaty"
 import StringUtil from "../util/string-util"
 import UserManager from "./user-manager"
 
+const PUSH_HOST = 'https://push.bot.qw360.cn'
+const PUSH_URL = `${PUSH_HOST}/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=`
+
 export default class WechatHelper {
 
     // 发消息
@@ -28,7 +31,7 @@ export default class WechatHelper {
      * @param msg 消息文本
      */
     static async pushMessage(msg: string) {
-        const { data } = await axios.get(`https://push.bot.qw360.cn/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=${encodeURIComponent(msg)}`)
+        const { data } = await axios.get(`${PUSH_URL}${encodeURIComponent(msg)}`)
         if (!data.status) {
             console.log(data)
         }
