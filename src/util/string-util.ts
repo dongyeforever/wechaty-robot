@@ -4,6 +4,10 @@ export default class StringUtil {
     }
 
     static isNull(obj: any) {
-        return obj == null || obj == '' || obj == undefined;
+        return obj == null || obj == '' || obj == undefined
+    }
+
+    static isNotNull(obj: any) {
+        return !StringUtil.isNull(obj)
     }
 }

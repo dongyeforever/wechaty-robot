@@ -17,6 +17,7 @@ import FireworkMixCommand from './command/fireworks-mix'
 import TVCommand from './command/tv'
 import NBNHHSHCommand from './command/nbnhhsh'
 import LimitFriendCommand from './command/limit-friend'
+import MovieCommand from './command/movie'
 // import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
@@ -44,6 +45,7 @@ export default class MessageHandler {
     this.map.set("#tv", new TVCommand())
     this.map.set("#hhsh", new NBNHHSHCommand())
     this.map.set("#朋友", new LimitFriendCommand())
+    this.map.set("#电影", new MovieCommand())
   }
 
   public static getInstance() {
