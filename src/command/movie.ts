@@ -27,19 +27,17 @@ export default class MovieCommand implements ICommand {
     } else {
       // 搜索
       const result = await this.search(movieTitle)
-      for (const item of result) {
-        WechatHelper.sayMessage(item, message)
-      }
+      const text = result.length > 1 ? result.join('\n#电影 ') : result[0]
+      WechatHelper.sayMessage(text, message)
     }
   }
 
   async getDetail(movieUrl: string, message: Message) {
-    const movie = new MovieDetail(movieUrl)
+    const movie = new MovieDetail(`https://www.dandanzan.cc/${movieUrl}.html`)
     await movie.getMovieInfo(async (info: MovieInfo) => {
       // 请求获取 m3u8 地址
       const { data } = await axios.post(info.url, info.postData)
-      console.log(typeof data, data)
-      WechatHelper.sayMessage(data, message)
+      WechatHelper.sayMessage(`http://www.m3u8player.top/?play=${data}`, message)
     })
   }
 
@@ -64,7 +62,7 @@ export default class MovieCommand implements ICommand {
     if (movies.length === 0) {
       movies.push(`未查询到 ${movieTitle}`)
     } else {
-      movies.unshift(`为你查询到${movies.length}条记录，请选择后发给我`)
+      movies.unshift(`查询到${movies.length}条相关记录：`)
     }
     return movies
   }

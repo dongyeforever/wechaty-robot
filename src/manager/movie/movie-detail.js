@@ -17,7 +17,7 @@ export default class MovieDetail {
             ],
             ignoreHTTPSErrors: true,
             headless: true,
-            executablePath: "/usr/bin/google-chrome"
+            // executablePath: "/usr/bin/google-chrome"
         })
         const proxy = 'http://0.0.0.0:8080'
         const page = await browser.newPage()
@@ -32,7 +32,7 @@ export default class MovieDetail {
                 console.log(req._url, req._postData)
                 useProxy(req, proxy)
                 if (callback) {
-                    callback({ url: req._url, postData: req.postData })
+                    callback({ url: req._url, postData: req._postData })
                 }
             } else {
                 req.continue()
