@@ -21,6 +21,10 @@ export default class MovieCommand implements ICommand {
     const movieTitle = arr[1]
     const movieUrl = arr[2]
     console.log(movieTitle, movieUrl)
+    if (!movieTitle) {
+      WechatHelper.sayMessage("格式为 #电影 名字", message)
+      return
+    }
     if (movieUrl && this.isUrl(movieUrl)) {
       // 查询电影结果
       this.getDetail(movieUrl, message)
