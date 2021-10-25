@@ -59,10 +59,10 @@ export default class MessageHandler {
     log.info('MessageHandler', message.toString())
     log.info('MessageHandler', '--------------------------------------------------------------------')
     log.info('MessageHandler', message.type())
-    log.info('MessageHandler', message.from())
+    log.info('MessageHandler', message.talker())
     log.info('MessageHandler', message.room())
     log.info('MessageHandler', message.text())
-    log.info('MessageHandler', message.from())
+    log.info('MessageHandler', message.talker())
     log.info('MessageHandler', message.to())
     log.info('MessageHandler', '--------------------------------------------------------------------')
 

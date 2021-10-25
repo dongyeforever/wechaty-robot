@@ -11,7 +11,7 @@ export default class LimitFriendCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()
-    if (message.from() && message.self()) {
+    if (message.talker() && message.self()) {
       // 是我自己才有权限执行这个指令
       let name = text.split(' ')[1]
       if (StringUtil.isNull(name)) {

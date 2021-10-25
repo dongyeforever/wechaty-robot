@@ -16,7 +16,7 @@ export default class LimitFriendFilter implements IFilter {
 
     isLimitFriend(message: Message): boolean {
         const data = LimitFriendStore.getInstance().getAll()
-        const from = message.from()
+        const from = message.talker()
         const to = message.to()
         for (const key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
