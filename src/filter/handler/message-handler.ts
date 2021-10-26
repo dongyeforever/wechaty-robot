@@ -3,21 +3,21 @@ import {
   Message,
   log
 } from 'wechaty'
-import ICommand from './command/command'
-import WeatherCommand from './command/weather'
-import OneCommand from './command/one'
-import RemindCommand from './command/remind'
-import HouseCommand from './command/house'
-import ChpCommand from './command/caihongpi'
-import DjtCommand from './command/dujitang'
-import GarbageCommand from './command/garbage'
-import FireworksCommand from './command/fireworks'
-import BomeCommand from './command/bome'
-import FireworkMixCommand from './command/fireworks-mix'
-import TVCommand from './command/tv'
-import NBNHHSHCommand from './command/nbnhhsh'
-import LimitFriendCommand from './command/limit-friend'
-import MovieCommand from './command/movie'
+import ICommand from '../../command/command'
+import WeatherCommand from '../../command/weather'
+import OneCommand from '../../command/one'
+import RemindCommand from '../../command/remind'
+import HouseCommand from '../../command/house'
+import ChpCommand from '../../command/caihongpi'
+import DjtCommand from '../../command/dujitang'
+import GarbageCommand from '../../command/garbage'
+import FireworksCommand from '../../command/fireworks'
+import BomeCommand from '../../command/bome'
+import FireworkMixCommand from '../../command/fireworks-mix'
+import TVCommand from '../../command/tv'
+import NBNHHSHCommand from '../../command/nbnhhsh'
+import LimitFriendCommand from '../../command/limit-friend'
+import MovieCommand from '../../command/movie'
 // import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
@@ -62,7 +62,6 @@ export default class MessageHandler {
     log.info('MessageHandler', message.talker())
     log.info('MessageHandler', message.room())
     log.info('MessageHandler', message.text())
-    log.info('MessageHandler', message.talker())
     log.info('MessageHandler', message.to())
     log.info('MessageHandler', '--------------------------------------------------------------------')
 

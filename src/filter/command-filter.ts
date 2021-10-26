@@ -1,6 +1,6 @@
 import { Message } from 'wechaty';
 import IFilter from './filter'
-import MessageHandler from '../message-handler'
+import MessageHandler from './handler/message-handler'
 import config from '../config/index'
 
 export default class CommandFilter implements IFilter {

@@ -36,7 +36,7 @@
     "qrcode-terminal": "^0.12.0",
     "wechaty": "^0.68.1",
     "wechaty-plugin-contrib": "^0.14.2",
-    "wechaty-puppet-wechat": "^0.30.6"
+    "wechaty-puppet-wechat": "^0.31.4"
   },
   "devDependencies": {
     "@chatie/eslint-config": "^0.12.1",
@@ -49,11 +49,7 @@
     "connect": "^3.7.0",
     "is-pr": "^1.1.0",
     "marked": "^1.1.0",
-    "nodemon": "^2.0.3",
-    "wechaty-puppet-mock": "^0.22.31",
-    "wechaty-puppet-padplus": "^0.6.6",
-    "wechaty-puppet-puppeteer": "^0.23.1",
-    "wechaty-puppet-wechat4u": "^0.16.3"
+    "nodemon": "^2.0.3"
   },
   "git": {
     "scripts": {

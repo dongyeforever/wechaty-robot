@@ -1,6 +1,6 @@
 import { Message } from 'wechaty';
 import IFilter from './filter'
-import LimitFriendHandler from '../limit-friend-handler'
+import LimitFriendHandler from './handler/limit-friend-handler'
 import LimitFriendStore from '../util/limit-friend-store'
 
 export default class LimitFriendFilter implements IFilter {

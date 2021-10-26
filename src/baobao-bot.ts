@@ -14,10 +14,11 @@ import config from './config/index'
 import { generate } from 'qrcode-terminal'
 import schedule from 'node-schedule'
 import FilterManager from './filter/filter-manager'
-import CommandFilter from './filter/command-filter'
 import RemindStore from './util/remind-store'
 import Task from './util/task'
 import Schedule from './util/schedule'
+import CommandFilter from './filter/command-filter'
+import HongBaoFilter from './filter/hongbao-filter'
 import LimitFriendFilter from './filter/limit-friend-filter'
 import UserManager from './manager/user-manager'
 import BinanceManager from './manager/binance-manager'
@@ -92,6 +93,7 @@ function main() {
 
   // 消息过滤器
   FilterManager.getInstance().setFilter(new CommandFilter())
+  FilterManager.getInstance().setFilter(new HongBaoFilter())
   FilterManager.getInstance().setFilter(new LimitFriendFilter())
   // 初始化提醒消息
   initRemindTask()
