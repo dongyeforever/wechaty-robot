@@ -10,8 +10,6 @@ export default class TaobaoCommand implements ICommand {
 
   async execute(message: Message) {
     const result = await new Taobao().spider()
-    console.log(typeof result);
-
     const fileBox = FileBox.fromStream(result, `tb${Date.now()}.jpg`)
     // const fileBox = FileBox.fromBase64(result, `tb${Date.now()}.png`)
     WechatHelper.sendFile(fileBox, message)

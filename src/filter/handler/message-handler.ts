@@ -19,6 +19,7 @@ import NBNHHSHCommand from '../../command/nbnhhsh'
 import LimitFriendCommand from '../../command/limit-friend'
 import MovieCommand from '../../command/movie'
 import TaobaoCommand from '../../command/taobao'
+import MusicCommand from '../../command/music'
 // import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
@@ -46,7 +47,8 @@ export default class MessageHandler {
     this.map.set("#hhsh", new NBNHHSHCommand())
     this.map.set("#朋友", new LimitFriendCommand())
     this.map.set("#电影", new MovieCommand())
-    this.map.set("#淘宝", new TaobaoCommand())
+    this.map.set("#买家秀", new TaobaoCommand())
+    this.map.set("#歌曲", new MusicCommand())
   }
 
   public static getInstance() {
