@@ -10,4 +10,11 @@ export default class StringUtil {
     static isNotNull(obj: any) {
         return !StringUtil.isNull(obj)
     }
+
+    static stringify(params: any) {
+        const data = Object.keys(params)
+            .map((key) => `${key}=${encodeURIComponent(params[key])}`)
+            .join('&')
+        return data
+    }
 }

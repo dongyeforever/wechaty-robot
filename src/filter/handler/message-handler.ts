@@ -18,6 +18,7 @@ import TVCommand from '../../command/tv'
 import NBNHHSHCommand from '../../command/nbnhhsh'
 import LimitFriendCommand from '../../command/limit-friend'
 import MovieCommand from '../../command/movie'
+import TaobaoCommand from '../../command/taobao'
 // import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
@@ -41,11 +42,11 @@ export default class MessageHandler {
     this.map.set("#烟花", new FireworksCommand())
     this.map.set("#炸弹", new BomeCommand())
     this.map.set("#都是炮", new FireworkMixCommand())
-    // this.map.set("#迎财神", new FortuneGodCommand())
     this.map.set("#tv", new TVCommand())
     this.map.set("#hhsh", new NBNHHSHCommand())
     this.map.set("#朋友", new LimitFriendCommand())
     this.map.set("#电影", new MovieCommand())
+    this.map.set("#淘宝", new TaobaoCommand())
   }
 
   public static getInstance() {

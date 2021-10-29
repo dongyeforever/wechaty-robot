@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Message } from "wechaty"
+import { FileBox, Message } from "wechaty"
 import StringUtil from "../util/string-util"
 import UserManager from "./user-manager"
 
@@ -13,8 +13,8 @@ export default class WechatHelper {
         if (StringUtil.isNull(text)) return
         if (message) {
             // 根据 message 决定发送方和接收方
-            if (message.to() && message.self()) {
-                await message.to()?.say(text)
+            if (message.listener() && message.self()) {
+                await message.listener()?.say(text)
             } else {
                 await message.say(text)
             }
@@ -23,6 +23,14 @@ export default class WechatHelper {
             UserManager.getInstance().getSelf().then(user => {
                 user?.say(text)
             })
+        }
+    }
+
+    static async sendFile(fileBox: FileBox, message: Message) {
+        if (message.listener() && message.self()) {
+            await message.listener()?.say(fileBox)
+        } else {
+            await message.say(fileBox)
         }
     }
 

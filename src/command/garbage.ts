@@ -2,6 +2,7 @@ import axios from 'axios'
 import ICommand from './command'
 import { Message } from 'wechaty'
 import WechatHelper from '../manager/wechat-helper'
+import StringUtil from '../util/string-util'
 
 /**
 * 垃圾分类
@@ -18,12 +19,17 @@ export default class GarbageCommand implements ICommand {
 
 class Garbage {
   // 垃圾分类 api
-  url = `https://api.66mz8.com/api/garbage.php?name=`
+  url = `http://h5.ninghai.gov.cn/ljfl/index.php?m=Home&c=Index&a=check`
 
-  async spider(garbage: String) {
-    const { data } = await axios.get(encodeURI(`${this.url}${garbage}`))
-    if (data.code === 200) return `${garbage} -- ${data.data}`
-    else return `${garbage} -- ${data.msg}`
+  async spider(garbage: string) {
+    const config = {
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    }
+    const { data } = await axios.post(this.url, StringUtil.stringify({ keywords: garbage }), config)
+    if (data.success === 1) return `${garbage}\n• ${data.cat_title}`
+    else return `${garbage}\n• 未找到`
   }
 
 }
