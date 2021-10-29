@@ -20,6 +20,7 @@ import LimitFriendCommand from '../../command/limit-friend'
 import MovieCommand from '../../command/movie'
 import TaobaoCommand from '../../command/taobao'
 import MusicCommand from '../../command/music'
+import HiCommand from '../../command/hi'
 // import FortuneGodCommand from './command/fortunegod'
 
 export default class MessageHandler {
@@ -30,6 +31,7 @@ export default class MessageHandler {
     this.map = new Map()
     const remindCommand = new RemindCommand()
     const chpCommand = new ChpCommand()
+    this.map.set("嗨", new HiCommand())
     this.map.set("#remind", remindCommand)
     this.map.set("#提醒", remindCommand)
     this.map.set("#weather", new WeatherCommand())
