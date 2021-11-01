@@ -9,8 +9,8 @@ import WechatHelper from '../manager/wechat-helper'
 export default class HiCommand implements ICommand {
 
   async execute(message: Message) {
-    WechatHelper.sayMessage(`嗨 小${message.talker().name()}，在呢`, message)
-    if (Math.random() > 0.5) {
+    WechatHelper.sayMessage(`嗨 小${message.talker().name()}, 我一直都在呢`, message)
+    if (Math.random() > 0.7) {
       const text = await new CaiHongPi().spider()
       WechatHelper.sayMessage(text, message)
     }
