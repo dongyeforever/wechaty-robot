@@ -13,10 +13,9 @@
     "app/**/*.ts",
     "bin/*.ts",
     "bot/**/*.ts",
-    "src/**/*.ts",
     "scripts/**/*.ts",
     "src/**/*.ts",
     "tests/**/*.spec.ts",
-    "src/manager/movie/movie-detail.js"
+    "src/**/*.js"
   ]
 }

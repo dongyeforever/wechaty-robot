@@ -9,7 +9,6 @@ import {
   Wechaty,
   log,
 } from 'wechaty'
-// import { PuppetPadplus } from 'wechaty-puppet-padplus'
 import config from './config/index'
 import { generate } from 'qrcode-terminal'
 import schedule from 'node-schedule'
@@ -23,8 +22,6 @@ import LimitFriendFilter from './filter/limit-friend-filter'
 import UserManager from './manager/user-manager'
 import BinanceManager from './manager/binance-manager'
 import WechatHelper from './manager/wechat-helper'
-// You can safely ignore the next line because it is using for CodeSandbox
-require('./.code-sandbox.js')
 
 function onScan(qrcode: string, status: ScanStatus) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -54,6 +51,10 @@ async function onMessage(message: Message) {
   FilterManager.getInstance().filterMessage(message)
 }
 
+function onError (e: any) {
+  console.error(e)
+}
+
 const bot = new Wechaty({
   name: 'baobao-bot',
   /**
@@ -78,6 +79,7 @@ bot.on('scan', onScan)
 bot.on('login', onLogin)
 bot.on('logout', onLogout)
 bot.on('message', onMessage)
+bot.on('error',   onError)
 
 bot.start()
   .then(() => log.info('StarterBot', 'Starter Bot Started.'))
