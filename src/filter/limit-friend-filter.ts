@@ -1,5 +1,5 @@
-import { Message } from 'wechaty';
-import IFilter from './filter'
+import type { Message } from 'wechaty';
+import type IFilter from './filter'
 import LimitFriendHandler from './handler/limit-friend-handler'
 import LimitFriendStore from '../util/limit-friend-store'
 
@@ -17,7 +17,7 @@ export default class LimitFriendFilter implements IFilter {
     isLimitFriend(message: Message): boolean {
         const data = LimitFriendStore.getInstance().getAll()
         const from = message.talker()
-        const to = message.to()
+        const to = message.listener()
         for (const key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
                 if (key === from?.id || key === to?.id) {

@@ -1,4 +1,4 @@
-import { Contact, Wechaty } from 'wechaty'
+import type { Contact, Wechaty } from 'wechaty'
 
 export default class UserManager {
     private static instance: UserManager
@@ -18,7 +18,7 @@ export default class UserManager {
         return this.instance
     }
 
-    public async findUser(search: string): Promise<Contact | null> {
+    public async findUser(search: string): Promise<Contact | undefined> {
         const user = await this.bot.Contact.find(search)
         return user
     }
@@ -26,7 +26,7 @@ export default class UserManager {
     /**
     * getSelf
     */
-    public async getSelf(): Promise<Contact | null> {
+    public async getSelf(): Promise<Contact | undefined> {
         // 文件传输助手发送消息提示
         return this.findUser('File Transfer')
     }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-import ICommand from './command'
-import { Message } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 
 /**
 * 搜剧
@@ -10,7 +10,7 @@ export default class TVCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()
-    const tv = text.split(' ')[1]
+    const tv = text.split(' ')[1] || ''
 
     const result = await new TVSpider().spider(tv)
     console.log(result);

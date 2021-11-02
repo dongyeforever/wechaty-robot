@@ -1,5 +1,5 @@
-import { Message } from 'wechaty';
-import IFilter from './filter'
+import type { Message } from 'wechaty';
+import type IFilter from './filter'
 import MessageHandler from './handler/message-handler'
 import config from '../config/index'
 
@@ -26,7 +26,8 @@ export default class CommandFilter implements IFilter {
             const room = message.room()
             if (room) {
                 const topic = await room.topic()
-                if (topic == config.GROUP_LIST[0].topic) {
+                const group = config.GROUP_LIST[0]?.topic || ''
+                if (topic == group) {
                     return true
                 }
             } else {

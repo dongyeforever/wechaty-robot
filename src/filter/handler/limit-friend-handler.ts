@@ -1,4 +1,4 @@
-import {
+import type {
   Message
 } from 'wechaty'
 // import axios from 'axios'

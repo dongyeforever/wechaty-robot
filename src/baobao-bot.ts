@@ -1,16 +1,12 @@
-/**
- * Wechaty - WeChat Bot SDK for Personal Account, Powered by TypeScript, Docker, and 💖
- *  - https://github.com/chatie/wechaty
- */
+import qrTerm from 'qrcode-terminal'
 import {
   Contact,
   Message,
-  ScanStatus,
-  Wechaty,
   log,
+  WechatyBuilder
 } from 'wechaty'
+
 import config from './config/index'
-import { generate } from 'qrcode-terminal'
 import schedule from 'node-schedule'
 import FilterManager from './filter/filter-manager'
 import RemindStore from './util/remind-store'
@@ -23,19 +19,9 @@ import UserManager from './manager/user-manager'
 import BinanceManager from './manager/binance-manager'
 import WechatHelper from './manager/wechat-helper'
 
-function onScan(qrcode: string, status: ScanStatus) {
-  if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
-    generate(qrcode, { small: true })  // show qrcode on console
-
-    const qrcodeImageUrl = [
-      'https://wechaty.js.org/qrcode/',
-      encodeURIComponent(qrcode),
-    ].join('')
-
-    log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
-  } else {
-    log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
-  }
+function onScan(qrcode: string, status: any) {
+  log.info(status)
+  qrTerm.generate(qrcode, { small: true })  // show qrcode on console
 }
 
 function onLogin(user: Contact) {
@@ -51,41 +37,23 @@ async function onMessage(message: Message) {
   FilterManager.getInstance().filterMessage(message)
 }
 
-function onError (e: any) {
+function onError(e: any) {
   console.error(e)
 }
 
-const bot = new Wechaty({
+const bot = WechatyBuilder.build({
   name: 'baobao-bot',
-  /**
-   * Specify a `puppet` for a specific protocol (Web/Pad/Mac/Windows, etc).
-   *
-   * You can use the following providers:
-   *  - wechaty-puppet-hostie
-   *  - wechaty-puppet-puppeteer
-   *  - wechaty-puppet-padplus
-   *  - etc.
-   *
-   * Learn more about Wechaty Puppet Providers at:
-   *  https://github.com/wechaty/wechaty-puppet/wiki/Directory
-   */
-
-  // puppet: new PuppetPadplus({
-  //   token: config.puppet_token
-  // })
+  puppet: 'wechaty-puppet-wechat'
 })
-
 bot.on('scan', onScan)
 bot.on('login', onLogin)
 bot.on('logout', onLogout)
 bot.on('message', onMessage)
-bot.on('error',   onError)
+bot.on('error', onError)
 
 bot.start()
   .then(() => log.info('StarterBot', 'Starter Bot Started.'))
-  .catch(async e => {
-    log.error('StarterBot', e)
-  })
+  .catch(console.error)
 
 // 登录成功之后的事情
 function main() {
@@ -110,7 +78,9 @@ function executeSelfTask() {
   rule.minute = 0
   rule.second = 0
   schedule.scheduleJob(rule, async () => {
-    const qun = await bot.Room.find(config.GROUP_LIST[0])
+    const group = config.GROUP_LIST[0]
+    const topic = group?.topic || ''
+    const qun = await bot.Room.find(topic)
     qun?.say("#weather")
   })
 
@@ -167,8 +137,8 @@ async function sendMessage(msgJson: any) {
     let room = await bot.Room.find({ id: roomId })
     room?.say(content)
   } else {
-    let targetId = (payload.toId === bot.userSelf().id) ? payload.fromId : payload.toId
-    let contact: Contact | null = await bot.Contact.find({ id: targetId })
+    let targetId = (payload.toId === new bot.ContactSelf().id) ? payload.fromId : payload.toId
+    let contact: Contact | undefined = await bot.Contact.find({ id: targetId })
     contact?.say(content)
   }
   WechatHelper.pushMessage(content)

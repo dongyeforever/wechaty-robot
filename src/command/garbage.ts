@@ -1,6 +1,6 @@
 import axios from 'axios'
-import ICommand from './command'
-import { Message } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 import WechatHelper from '../manager/wechat-helper'
 import StringUtil from '../util/string-util'
 
@@ -11,7 +11,7 @@ export default class GarbageCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()
-    const garbage = text.split(' ')[1]
+    const garbage = text.split(' ')[1] || ''
     const result = await new Garbage().spider(garbage)
     WechatHelper.sayMessage(result, message)
   }

@@ -3,7 +3,7 @@ import {
   Message,
   log
 } from 'wechaty'
-import ICommand from '../../command/command'
+import type ICommand from '../../command/command'
 import WeatherCommand from '../../command/weather'
 import OneCommand from '../../command/one'
 import RemindCommand from '../../command/remind'
@@ -70,7 +70,7 @@ export default class MessageHandler {
     log.info('MessageHandler', message.to())
     log.info('MessageHandler', '--------------------------------------------------------------------')
 
-    const text = message.text().split(" ")[0]
+    const text = message.text().split(" ")[0] || ''
     const command = this.map.get(text)
     command?.execute(message)
   }

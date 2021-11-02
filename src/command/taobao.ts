@@ -1,6 +1,7 @@
 import axios from 'axios'
-import ICommand from './command'
-import { Message, FileBox } from 'wechaty'
+import type ICommand from './command'
+import { FileBox }  from 'file-box'
+import type { Message } from 'wechaty'
 import WechatHelper from '../manager/wechat-helper'
 
 /**

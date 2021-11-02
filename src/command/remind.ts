@@ -1,5 +1,5 @@
-import ICommand from './command'
-import { Message, } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 import Schedule from '../util/schedule'
 import Task from '../util/task'
 import RemindStore from '../util/remind-store'
@@ -13,17 +13,20 @@ export default class RemindCommand implements ICommand {
   async execute(message: Message) {
     const text = message.text()
     const time = text.split('<br/>')[0]
+    if (!time) {
+      return
+    }
     // 格式不正确处理
     const regexDate = /(\d{4})-(\d{2})-(\d{2}) (([0-2][0-3])|([0-1][0-9])):[0-5][0-9]/ // 2020-10-20 15:15
     const realDate = time.match(regexDate)
     let dateTime = ''
     if (realDate) {
-      dateTime = realDate[0]
+      dateTime = realDate[0] || ''
     } else {
       const regexTime = /(([0-2][0-3])|([0-1][0-9])):[0-5][0-9]/ // 15:15
       const realTime = time.match(regexTime)
       if (realTime) {
-        dateTime = realTime[0]
+        dateTime = realTime[0] || ''
       } else {
         WechatHelper.sayMessage("格式不识别，正确格式为：\n #remind 16:21 内容\n #remind 2020-10-21 16:21 内容", message)
         return

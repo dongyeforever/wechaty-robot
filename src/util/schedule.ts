@@ -1,4 +1,4 @@
-import Task from './task'
+import type Task from './task'
 /**
  * 定时任务
  */
@@ -27,7 +27,7 @@ export default class Schedule {
         if (time && this.getTime(time) >= new Date().getTime()) {
             let needStart = false
             // 如果当前没有task，需要开启任务 || 如果时间在数组第一个元素之前需要重新计时
-            if (this.scheduleList.length === 0 || this.getTime(time) < this.getTime(this.scheduleList[0].time)) {
+            if (this.scheduleList.length === 0 || (this.scheduleList[0] && this.getTime(time) < this.getTime(this.scheduleList[0].time))) {
                 needStart = true
             }
             this.scheduleList.push(task)
@@ -54,7 +54,7 @@ export default class Schedule {
     start() {
         this.stop()
         if (this.scheduleList.length > 0) {
-            const nextTime = this.scheduleList[0].time
+            const nextTime = this.scheduleList[0]?.time || ''
             const timeout = this.getTime(nextTime) - new Date().getTime()
             this.timer = setTimeout(() => { this.executeTask() }, timeout);
         }
@@ -70,8 +70,9 @@ export default class Schedule {
         const regexDate = /^(\d{4})-(\d{2})-(\d{2}) (([0-2][0-3])|([0-1][0-9])):[0-5][0-9]$/ // 2020-10-20 15:15
         if (regexTime.test(nextTime)) {
             const nextDate = new Date()
-            nextDate.setHours(parseInt(nextTime.split(":")[0]))
-            nextDate.setMinutes(parseInt(nextTime.split(":")[1]))
+            const timeSplit = nextTime.split(':')
+            nextDate.setHours(parseInt(timeSplit[0] || ''))
+            nextDate.setMinutes(parseInt(timeSplit[1] || ''))
             milliseconds = nextDate.getTime()
         } else if (regexDate.test(nextTime)) {
             milliseconds = new Date(nextTime).getTime()

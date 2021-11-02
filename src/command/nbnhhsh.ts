@@ -1,6 +1,6 @@
 import axios from 'axios'
-import ICommand from './command'
-import { Message } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 import WechatHelper from '../manager/wechat-helper'
 
 /**
@@ -10,7 +10,7 @@ export default class NBNHHSHCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()
-    const nbnhhsh = text.split(' ')[1]
+    const nbnhhsh = text.split(' ')[1] || ''
     const patten = /^[A-Za-z]+$/
     if (nbnhhsh.match(patten) == null) {
       WechatHelper.sayMessage(`格式【#hhsh 缩写字母】哦`, message)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-import ICommand from './command'
-import { Message, } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 import got from 'got'
 import WechatHelper from '../manager/wechat-helper'
 
@@ -40,7 +40,7 @@ class LianHouse {
     let listContent = ''
     $('.sellListContent li').each(function (_, elem) {
       const target = $(elem).find(".info")
-      const publicDate = target.find(".followInfo").text().split("/")[1].trim()
+      const publicDate = target.find(".followInfo").text().split("/")[1]?.trim() || ''
       const date = publicDate.split("发布")[0]
       if (date == "刚刚" /* || date == "1天以前"*/) {
         const title = target.find(".title a")
@@ -76,7 +76,7 @@ class I5House {
 
     $('.pList li').each(function (_, elem) {
       const target = $(elem).find(".listCon")
-      const publicDate = target.find(".listX p").eq(2).text().split("·")[2].trim()
+      const publicDate = target.find(".listX p").eq(2).text().split("·")[2]?.trim() || ''
       const date = publicDate.split("发布")[0]
       if (date == "今天" /* || date == "昨天"*/) {
         const title = target.find(".listTit a")

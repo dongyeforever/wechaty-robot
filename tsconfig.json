@@ -1,6 +1,7 @@
 {
   "extends": "@chatie/tsconfig",
   "compilerOptions": {
+    "module": "commonjs",
     "outDir": "dist",
     "allowJs": true
   },

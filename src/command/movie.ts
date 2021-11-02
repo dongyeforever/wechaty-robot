@@ -1,5 +1,5 @@
-import ICommand from './command'
-import { Message } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 import WechatHelper from '../manager/wechat-helper'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
@@ -31,7 +31,7 @@ export default class MovieCommand implements ICommand {
     } else {
       // 搜索
       const result = await this.search(movieTitle)
-      const text = result.length > 1 ? result.join('\n#电影 ') : result[0]
+      const text = result.length > 1 ? result.join('\n#电影 ') : result[0] + ''
       WechatHelper.sayMessage(text, message)
     }
   }

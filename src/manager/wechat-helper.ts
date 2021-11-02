@@ -1,5 +1,6 @@
 import axios from "axios"
-import { FileBox, Message } from "wechaty"
+import type { FileBox }  from 'file-box'
+import type { Message } from "wechaty"
 import StringUtil from "../util/string-util"
 import UserManager from "./user-manager"
 

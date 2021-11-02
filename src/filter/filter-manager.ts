@@ -1,5 +1,5 @@
-import { Message } from 'wechaty'
-import IFilter from './filter'
+import type { Message } from 'wechaty'
+import type IFilter from './filter'
 import FilterChain from './filter-chain'
 
 export default class FilterManager {

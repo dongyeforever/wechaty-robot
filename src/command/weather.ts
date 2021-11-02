@@ -1,5 +1,5 @@
-import ICommand from './command'
-import { Message, } from 'wechaty'
+import type ICommand from './command'
+import type { Message } from 'wechaty'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import WechatHelper from '../manager/wechat-helper'

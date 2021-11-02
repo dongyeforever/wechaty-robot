@@ -1,5 +1,5 @@
 import BaseBomeCommand from './base-bome'
-import { Message, } from 'wechaty'
+import type { Message } from 'wechaty'
 import WechatHelper from '../manager/wechat-helper'
 
 /**

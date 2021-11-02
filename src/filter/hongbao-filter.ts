@@ -1,7 +1,7 @@
-import { Message } from 'wechaty';
+import type { Message } from 'wechaty';
 import WechatHelper from '../manager/wechat-helper';
 import StringUtil from '../util/string-util';
-import IFilter from './filter'
+import type IFilter from './filter'
 
 export default class HongBaoFilter implements IFilter {
 

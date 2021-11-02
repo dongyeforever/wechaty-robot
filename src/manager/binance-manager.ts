@@ -111,10 +111,11 @@ export default class BinanceManager {
     // 发送提醒
     private async pushMessage(pushMessage: PushMessage) {
         const message = Object.assign({}, pushMessage)
-        const ab = Array.from(alphabeta)
-        let symbol = message.symbol.replace('USDT', '').toLowerCase()
+        const ab: string[] = Array.from(alphabeta)
+        let symbol = message.symbol.replace('USDT', '').toLowerCase() || ''
         for (const chars of symbol) {
-            symbol = symbol.replace(chars, ab[chars.charCodeAt(0) - 97])
+            const index = chars.charCodeAt(0) - 97
+            symbol = symbol.replace(chars, ab[index] || '')
         }
         const percent = `${message.percent > 0 ? '⁺' : '⁻'}${Math.abs(message.percent).toFixed(2)}%`
         const price = message.price ? `#${Math.round(message.price)}` : ''
