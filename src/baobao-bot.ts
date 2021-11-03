@@ -3,7 +3,8 @@ import {
   Contact,
   Message,
   log,
-  WechatyBuilder
+  WechatyBuilder,
+  ScanStatus
 } from 'wechaty'
 
 import config from './config/index'
@@ -19,9 +20,18 @@ import UserManager from './manager/user-manager'
 import BinanceManager from './manager/binance-manager'
 import WechatHelper from './manager/wechat-helper'
 
-function onScan(qrcode: string, status: any) {
-  log.info(status)
-  qrTerm.generate(qrcode, { small: true })  // show qrcode on console
+function onScan(qrcode: string, status: ScanStatus) {
+  if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
+    qrTerm.generate(qrcode, { small: true })  // show qrcode on console
+    const qrcodeImageUrl = [
+      'https://wechaty.js.org/qrcode/',
+      encodeURIComponent(qrcode),
+    ].join('')
+
+    log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
+  } else {
+    log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
+  }
 }
 
 function onLogin(user: Contact) {
