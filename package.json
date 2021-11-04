@@ -4,11 +4,11 @@
   "description": "Wechaty is a Conversational SDK for Chatbot Makers",
   "main": "src/baobao-bot.js",
   "engines": {
-    "node": ">= 14"
+    "node": ">= 12"
   },
   "scripts": {
     "lint": "",
-    "start": "cross-env WECHATY_LOG=verbose node -r ts-node/register src/baobao-bot.ts",
+    "start": "cross-env WECHATY_LOG=verbose forever start -v -c ts-node src/baobao-bot.ts",
     "test": "npm run lint && npm run test:version && npm run test:smoke",
     "test:smoke": "node tests/smoke-testing.js",
     "test:version": "check-node-version --node \">= 12\""
