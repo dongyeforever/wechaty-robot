@@ -52,6 +52,11 @@ export default class BinanceManager {
             for (const item of symbols) {
                 this.requestMinute(item)
             }
+            const date = new Date()
+            if (date.getMinutes() === 0) {
+                // 每小时检查一次小币种涨幅
+                this.checkOtherSymbol()
+            }
         })
     }
 
@@ -72,10 +77,6 @@ export default class BinanceManager {
         if (date.getMinutes() % 15 === 0) {
             // 每 15 分钟检查一次
             this.check15Minute(lastSymbol, price, symbol)
-        } 
-        if (date.getMinutes() === 0) {
-            // 每小时检查一次小币种涨幅
-            this.checkOtherSymbol()
         }
     }
 
