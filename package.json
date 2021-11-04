@@ -9,9 +9,9 @@
   "scripts": {
     "lint": "",
     "start": "cross-env WECHATY_LOG=verbose forever start -v -c ts-node src/baobao-bot.ts",
+    "dev": "cross-env WECHATY_LOG=verbose node -r ts-node/register src/baobao-bot.ts",
     "test": "npm run lint && npm run test:version && npm run test:smoke",
-    "test:smoke": "node tests/smoke-testing.js",
-    "test:version": "check-node-version --node \">= 12\""
+    "test:smoke": "node tests/smoke-testing.js"
   },
   "repository": {
     "type": "git",
