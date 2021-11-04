@@ -72,7 +72,8 @@ export default class BinanceManager {
         if (date.getMinutes() % 15 === 0) {
             // 每 15 分钟检查一次
             this.check15Minute(lastSymbol, price, symbol)
-        } else if (date.getMinutes() === 0) {
+        } 
+        if (date.getMinutes() === 0) {
             // 每小时检查一次小币种涨幅
             this.checkOtherSymbol()
         }
