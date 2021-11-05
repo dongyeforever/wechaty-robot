@@ -7,7 +7,7 @@ export default class HongBaoFilter implements IFilter {
 
     execute(message: Message) {
         const text = message.text()
-        const room = message.room() || ''
+        const room = message.room()?.topic() || ''
         const from = message.talker().name()
         if (text.startsWith('收到红包')) {
             const msg = `[爱心][${StringUtil.isNull(room) ? '' : room + ' '}${from}] ${text}`

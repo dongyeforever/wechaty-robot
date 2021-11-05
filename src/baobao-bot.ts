@@ -16,9 +16,11 @@ import Schedule from './util/schedule'
 import CommandFilter from './filter/command-filter'
 import HongBaoFilter from './filter/hongbao-filter'
 import LimitFriendFilter from './filter/limit-friend-filter'
+import RecallFilter from './filter/recall-filter'
 import UserManager from './manager/user-manager'
 import BinanceManager from './manager/binance-manager'
 import WechatHelper from './manager/wechat-helper'
+import HistoryMessageManager from './manager/history-message'
 
 function onScan(qrcode: string, status: ScanStatus) {
   if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
@@ -44,6 +46,9 @@ function onLogout(user: Contact) {
 }
 
 async function onMessage(message: Message) {
+  // 保存消息
+  HistoryMessageManager.getInstance().enqueue({ id: message.id, data: message })
+  // 处理消息
   FilterManager.getInstance().filterMessage(message)
 }
 
@@ -75,6 +80,7 @@ function main() {
   FilterManager.getInstance().setFilter(new CommandFilter())
   FilterManager.getInstance().setFilter(new HongBaoFilter())
   FilterManager.getInstance().setFilter(new LimitFriendFilter())
+  FilterManager.getInstance().setFilter(new RecallFilter())
   // 初始化提醒消息
   initRemindTask()
   // 用户管理
