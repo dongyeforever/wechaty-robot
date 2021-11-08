@@ -1,9 +1,11 @@
 import type { Message } from 'wechaty'
 import { FileBox } from "file-box"
-import HistoryMessageManager from '../manager/history-message';
-import WechatHelper from '../manager/wechat-helper';
+import HistoryMessageManager from '../manager/history-message'
+import WechatHelper from '../manager/wechat-helper'
 import type IFilter from './filter'
-import UserManager from '../manager/user-manager';
+import UserManager from '../manager/user-manager'
+import * as fs from 'fs'
+import * as path from 'path'
 
 export default class RecallFilter implements IFilter {
 
@@ -43,13 +45,23 @@ export default class RecallFilter implements IFilter {
         const file = await msg.toFileBox()
         const name = file.name
         console.log('Save file to: ' + name)
-        file.toFile()
+        await file.toFile()
+
+        fs.rename(path.join(__dirname, "../../", name), this.getTmpFile(name), (err) => {
+            if (err) {
+                console.log(err)
+            }
+        })
     }
 
     private async sendFile(fileName: string) {
-        const filebox = FileBox.fromFile(fileName)
+        const filebox = FileBox.fromFile(this.getTmpFile(fileName))
         UserManager.getInstance().getSelf().then(user => {
             user?.say(filebox)
         })
+    }
+
+    private getTmpFile(fileName: string) {
+        return path.join(__dirname, '../tmp/', fileName)
     }
 }
