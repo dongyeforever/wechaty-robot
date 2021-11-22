@@ -46,7 +46,7 @@ export default class RecallFilter implements IFilter {
         const name = file.name
         console.log('Save file to: ' + name)
         await file.toFile()
-
+        
         fs.rename(path.join(__dirname, "../../", name), this.getTmpFile(name), (err) => {
             if (err) {
                 console.log(err)
@@ -62,6 +62,6 @@ export default class RecallFilter implements IFilter {
     }
 
     private getTmpFile(fileName: string) {
-        return path.join(__dirname, '../tmp/', fileName)
+        return path.join(__dirname, '../../cache/', fileName)
     }
 }
