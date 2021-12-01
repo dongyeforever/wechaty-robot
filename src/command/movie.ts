@@ -41,7 +41,11 @@ export default class MovieCommand implements ICommand {
     await movie.getMovieInfo(async (info: MovieInfo) => {
       // 请求获取 m3u8 地址
       const { data } = await axios.post(info.url, info.postData)
-      WechatHelper.sayMessage(`http://www.m3u8player.top/?play=${data}`, message)
+      if (data.startsWith('ipfs')) {
+        WechatHelper.sayMessage(`http://www.m3u8player.top/?play=https://i.baobuzz.com/${data}`, message)
+      } else {
+        WechatHelper.sayMessage(`http://www.m3u8player.top/?play=${data}`, message)
+      }
     })
   }
 
