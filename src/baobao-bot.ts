@@ -15,6 +15,7 @@ import Task from './util/task'
 import Schedule from './util/schedule'
 import CommandFilter from './filter/command-filter'
 import HongBaoFilter from './filter/hongbao-filter'
+import ExpressFilter from './filter/express-filter'
 import LimitFriendFilter from './filter/limit-friend-filter'
 import RecallFilter from './filter/recall-filter'
 import UserManager from './manager/user-manager'
@@ -79,6 +80,7 @@ function main() {
   // 消息过滤器
   FilterManager.getInstance().setFilter(new CommandFilter())
   FilterManager.getInstance().setFilter(new HongBaoFilter())
+  FilterManager.getInstance().setFilter(new ExpressFilter())
   FilterManager.getInstance().setFilter(new LimitFriendFilter())
   FilterManager.getInstance().setFilter(new RecallFilter())
   // 初始化提醒消息
