@@ -11,7 +11,11 @@ export default class Store {
     add(key: string, message: any) {
         try {
             const data = this.getAll()
-            data[key] = JSON.stringify(message)
+            if (data[key]) {
+                data[key] = [...data[key], JSON.stringify(message)]
+            } else {
+                data[key] = [JSON.stringify(message)]
+            }
             this.writeToFile(data)
         } catch (error) {
             console.log(error)

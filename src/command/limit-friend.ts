@@ -32,7 +32,7 @@ export default class LimitFriendCommand implements ICommand {
 
   private addContactDirect(message: Message) {
     if (message.room() == null) { // 非群消息
-      const toUser = message.to()
+      const toUser = message.listener()
       if (toUser) {
         LimitFriendStore.getInstance().add(toUser.id, toUser)
       }
