@@ -13,7 +13,7 @@ const header = {
 const apiToday = `${host}/ticker/today`
 const apiPrice = `${host}/ticker/price`
 const symbols = ["BTCUSDT", "ETHUSDT"]
-const otherSymbols = ["DOGEUSDT", "AAVEUSDT", "COMPUSDT", "SUSHIUSDT", "AVAXUSDT", "SOLUSDT", "FTMUSDT", "JUVUSDT"]
+const otherSymbols = ["DOGEUSDT", "AAVEUSDT", "COMPUSDT", "GALAUSDT", "AVAXUSDT", "SOLUSDT", "FTMUSDT", "JUVUSDT", "ZECUSDT", "IMXUSDT"]
 // 推送时间类型
 enum PUSH_TYPE {
     MINUTE = '1分钟',
@@ -22,7 +22,7 @@ enum PUSH_TYPE {
 }
 // 英文字母
 // const alphabeta = 'a̷b̷c̷d̷e̷f̷g̷h̷i̷j̷k̷l̷m̷n̷o̷p̷̷q̷r̷s̷t̷u̷vw̷x̷y̷z̷'
-const alphabeta = 'ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤvⓦⓧⓨⓩ'
+const alphabeta = 'ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ'
 
 interface PushMessage {
     price?: number
