@@ -6,7 +6,7 @@ import WechatHelper from '../manager/wechat-helper'
 /**
 * 能不能好好说话
 */
-export default class NBNHHSHCommand implements ICommand {
+export default class HHSHCommand implements ICommand {
 
   async execute(message: Message) {
     const text = message.text()

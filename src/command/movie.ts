@@ -5,6 +5,8 @@ import axios from 'axios'
 import * as cheerio from 'cheerio'
 import MovieDetail from "../manager/movie/movie-detail"
 
+//"puppeteer-page-proxy": "^1.13.2",
+ 
 interface MovieInfo {
   url: string
   postData: Object

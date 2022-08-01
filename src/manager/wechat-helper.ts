@@ -1,11 +1,10 @@
 import axios from "axios"
-import type { FileBox }  from 'file-box'
+import type { FileBox } from 'file-box'
 import type { Message } from "wechaty"
 import StringUtil from "../util/string-util"
 import UserManager from "./user-manager"
 
-const PUSH_HOST = 'https://push.bot.qw360.cn'
-const PUSH_URL = `${PUSH_HOST}/send/25d19400-1f1c-11ec-806f-9354f453c154?msg=`
+const PUSH_HOST = 'http://wxpusher.zjiecode.com/api/send/message'
 
 export default class WechatHelper {
 
@@ -40,7 +39,14 @@ export default class WechatHelper {
      * @param msg 消息文本
      */
     static async pushMessage(msg: string) {
-        const { data } = await axios.get(`${PUSH_URL}${encodeURIComponent(msg)}`)
+        const { data } = await axios.post(PUSH_HOST, {
+            "appToken": "AT_6eWyJkoDtpfGn8hLm2d6ULwxj4cYlIXB",
+            "content": msg,
+            "contentType": 1,//内容类型 1表示文字  2表示html(只发送body标签内部的数据即可，不包括body标签) 3表示markdown 
+            "uids": [//发送目标的UID，是一个数组。注意uids和topicIds可以同时填写，也可以只填写一个。
+                "UID_nwqAYkZxS4V6yVWyd74XoTphSRUy"
+            ]
+        })
         if (!data.status) {
             console.log(data)
         }

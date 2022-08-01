@@ -14,7 +14,7 @@ import GarbageCommand from '../../command/garbage'
 import FireworksCommand from '../../command/fireworks'
 import BomeCommand from '../../command/bome'
 import FireworkMixCommand from '../../command/fireworks-mix'
-import NBNHHSHCommand from '../../command/nbnhhsh'
+import HHSHCommand from '../../command/hhsh'
 import LimitFriendCommand from '../../command/limit-friend'
 import MovieCommand from '../../command/movie'
 import TaobaoCommand from '../../command/taobao'
@@ -90,7 +90,7 @@ export default class MessageHandler {
   private setHiCommand() {
     const hiCommand = new HiCommand()
     this.map.set("嗨", hiCommand)
-    this.map.set("#hhsh", new NBNHHSHCommand())
+    this.map.set("#hhsh", new HHSHCommand())
     this.map.set("#朋友", new LimitFriendCommand())
   }
 

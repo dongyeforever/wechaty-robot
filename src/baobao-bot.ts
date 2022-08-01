@@ -1,14 +1,12 @@
-import qrTerm from 'qrcode-terminal'
+import { QRCodeTerminal } from 'wechaty-plugin-contrib'
 import {
   Contact,
   Message,
   log,
-  WechatyBuilder,
-  ScanStatus
+  WechatyBuilder
 } from 'wechaty'
-
 import config from './config/index'
-import schedule from 'node-schedule'
+import { RecurrenceRule, scheduleJob } from 'node-schedule'
 import FilterManager from './filter/filter-manager'
 import RemindStore from './util/remind-store'
 import Task from './util/task'
@@ -19,23 +17,17 @@ import ExpressFilter from './filter/express-filter'
 import LimitFriendFilter from './filter/limit-friend-filter'
 import RecallFilter from './filter/recall-filter'
 import UserManager from './manager/user-manager'
-import BinanceManager from './manager/binance-manager'
+// import BinanceManager from './manager/binance-manager'
 import WechatHelper from './manager/wechat-helper'
 import HistoryMessageManager from './manager/history-message'
 
-function onScan(qrcode: string, status: ScanStatus) {
-  if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
-    qrTerm.generate(qrcode, { small: true })  // show qrcode on console
-    const qrcodeImageUrl = [
-      'https://wechaty.js.org/qrcode/',
-      encodeURIComponent(qrcode),
-    ].join('')
-
-    log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl)
-  } else {
-    log.info('StarterBot', 'onScan: %s(%s)', ScanStatus[status], status)
-  }
-}
+const bot = WechatyBuilder.build({
+  name: 'baobao-bot',
+  puppetOptions: {
+    uos: true  // 开启uos协议
+  },
+  puppet: 'wechaty-puppet-wechat',
+})
 
 function onLogin(user: Contact) {
   log.info('StarterBot', '%s login', user)
@@ -57,16 +49,14 @@ function onError(e: any) {
   console.error(e)
 }
 
-const bot = WechatyBuilder.build({
-  name: 'baobao-bot',
-  puppet: 'wechaty-puppet-wechat'
-})
-bot.on('scan', onScan)
 bot.on('login', onLogin)
 bot.on('logout', onLogout)
 bot.on('message', onMessage)
 bot.on('error', onError)
 
+bot.use(QRCodeTerminal({
+  small: true
+}))
 bot.start()
   .then(() => log.info('StarterBot', 'Starter Bot Started.'))
   .catch(console.error)
@@ -91,11 +81,11 @@ function main() {
 
 function executeSelfTask() {
   // 天气
-  const rule = new schedule.RecurrenceRule()
+  const rule = new RecurrenceRule()
   rule.hour = [7, 23]
   rule.minute = 0
   rule.second = 0
-  schedule.scheduleJob(rule, async () => {
+  scheduleJob(rule, async () => {
     const group = config.GROUP_LIST[0]
     const topic = group?.topic || ''
     const qun = await bot.Room.find(topic)
@@ -103,13 +93,13 @@ function executeSelfTask() {
   })
 
   // binance 价格查询
-  const binance = new BinanceManager()
-  binance.start()
+  // const binance = new BinanceManager()
+  // binance.start()
 
   // 查找群组
   // config.GROUP_LIST.forEach(async item => {
   //   // 房源
-  //   schedule.scheduleJob(config.HOUSE_JOB, async () => {
+  //   scheduleJob(config.HOUSE_JOB, async () => {
   //     const qun = await bot.Room.find(item)
   //     qun?.say("#house")
   //   })
@@ -119,7 +109,7 @@ function executeSelfTask() {
 // 房源
 function executeFamilyTask() {
   // 已买第一套房，临时关闭
-  // schedule.scheduleJob(config.HOUSE_JOB, async () => {
+  // scheduleJob(config.HOUSE_JOB, async () => {
   //   const qunList = await bot.Room.findAll()
   //   qunList.forEach(item => {
   //     item.topic().then(topic => {
