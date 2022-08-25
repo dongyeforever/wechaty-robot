@@ -73,10 +73,10 @@ function main() {
   FilterManager.getInstance().setFilter(new ExpressFilter())
   FilterManager.getInstance().setFilter(new LimitFriendFilter())
   FilterManager.getInstance().setFilter(new RecallFilter())
-  // 初始化提醒消息
-  initRemindTask()
   // 用户管理
   UserManager.init(bot)
+  // 初始化提醒消息
+  initRemindTask()
 }
 
 function executeSelfTask() {

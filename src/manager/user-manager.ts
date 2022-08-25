@@ -28,7 +28,7 @@ export default class UserManager {
     */
     public async getSelf(): Promise<Contact | undefined> {
         // 文件传输助手发送消息提示
-        return this.findUser('File Transfer')
+        return this.findUser('文件传输助手')
     }
 
 }

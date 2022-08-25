@@ -28,7 +28,7 @@ export default class RecallFilter implements IFilter {
                 pushMessage = `${pushMessage} ${msg.text()}`
             } else {
                 const newMessage: any = Object.assign({}, msg)
-                const fileName = newMessage['_payload']['filename']
+                const fileName = newMessage['payload']['filename']
                 pushMessage = `${pushMessage} ${fileName}`
                 this.sendFile(fileName)
             }
@@ -55,8 +55,14 @@ export default class RecallFilter implements IFilter {
     }
 
     private async sendFile(fileName: string) {
+        console.log("############", this.getTmpFile(fileName));
+        
         const filebox = FileBox.fromFile(this.getTmpFile(fileName))
+
+        console.log("####### filebox #####", filebox);
+        console.log("####### getSelf #####", UserManager.getInstance());
         UserManager.getInstance().getSelf().then(user => {
+            console.log("############", user?.name);
             user?.say(filebox)
         })
     }

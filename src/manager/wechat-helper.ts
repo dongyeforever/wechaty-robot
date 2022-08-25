@@ -19,7 +19,7 @@ export default class WechatHelper {
                 await message.say(text)
             }
         } else {
-            // 发消息给自己 
+            // 发消息给自己
             UserManager.getInstance().getSelf().then(user => {
                 user?.say(text)
             })
