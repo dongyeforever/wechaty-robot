@@ -10,7 +10,7 @@ import * as path from 'path'
 export default class RecallFilter implements IFilter {
 
     execute(message: Message) {
-        console.log(message);
+        // console.log(message);
         // Audio(2) Image(6) Video(4)
         if (message.type() === 2 || message.type() === 6) {
             this.saveFile(message)
@@ -55,14 +55,8 @@ export default class RecallFilter implements IFilter {
     }
 
     private async sendFile(fileName: string) {
-        console.log("############", this.getTmpFile(fileName));
-        
         const filebox = FileBox.fromFile(this.getTmpFile(fileName))
-
-        console.log("####### filebox #####", filebox);
-        console.log("####### getSelf #####", UserManager.getInstance());
         UserManager.getInstance().getSelf().then(user => {
-            console.log("############", user?.name);
             user?.say(filebox)
         })
     }
