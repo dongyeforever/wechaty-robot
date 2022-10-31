@@ -69,6 +69,7 @@ export default class MessageHandler {
 
   private setFireCommand() {
     this.map.set("#烟花", new FireworksCommand())
+    this.map.set("平安喜乐", new FireworksCommand())
     this.map.set("#炸弹", new BomeCommand())
     this.map.set("#都是炮", new FireworkMixCommand())
     // import FortuneGodCommand from './command/fortunegod'

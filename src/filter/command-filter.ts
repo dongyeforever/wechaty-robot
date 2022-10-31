@@ -11,7 +11,7 @@ export default class CommandFilter implements IFilter {
             MessageHandler.getInstance().handleMessage(message)
             return true
         }
-        // 烦躁特殊处理
+        // “烦躁”、“平安喜乐”等特殊处理
         this.handleAntsy(message).then(result => {
             if (result) {
                 MessageHandler.getInstance().handleMessage(message)
@@ -35,6 +35,9 @@ export default class CommandFilter implements IFilter {
             }
         }
         if (message.text() === "嗨 睿睿" || message.text() === "嗨 柱子") {
+            return true
+        }
+        if (message.text() === "平安喜乐") {
             return true
         }
         return false
