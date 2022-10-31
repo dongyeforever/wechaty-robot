@@ -37,7 +37,7 @@ export default class CommandFilter implements IFilter {
         if (message.text() === "嗨 睿睿" || message.text() === "嗨 柱子") {
             return true
         }
-        if (message.text() === "平安喜乐") {
+        if (message.text() === "平安喜乐呀") {
             return true
         }
         return false
