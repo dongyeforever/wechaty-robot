@@ -16,10 +16,9 @@ import BomeCommand from '../../command/bome'
 import FireworkMixCommand from '../../command/fireworks-mix'
 import HHSHCommand from '../../command/hhsh'
 import LimitFriendCommand from '../../command/limit-friend'
-import MovieCommand from '../../command/movie'
 import TaobaoCommand from '../../command/taobao'
-import MusicCommand from '../../command/music'
 import HiCommand from '../../command/hi'
+import AiCommand from '../../command/ai'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -27,16 +26,7 @@ export default class MessageHandler {
 
   private constructor() {
     this.map = new Map()
-    this.setChpCommand()
-    this.setRemindCommand()
-    this.setFireCommand()
-    this.setHouseTool()
-    this.map.set("#one", new OneCommand())
-    this.map.set("#dujitang", new DjtCommand())
-    this.map.set("#买家秀", new TaobaoCommand())
-    this.map.set("#电影", new MovieCommand())
-    this.map.set("#歌曲", new MusicCommand())
-    this.setHiCommand()
+    this.setMainCommand()
   }
 
   public static getInstance() {
@@ -61,31 +51,31 @@ export default class MessageHandler {
     command?.execute(message)
   }
 
-  private setHouseTool() {
+  private setMainCommand() {
+    this.setFireCommand()
+    this.setLifeCommand()
+    this.setHiCommand()
+  }
+
+  private setLifeCommand() {
     this.map.set("#weather", new WeatherCommand())
     this.map.set("#house", new HouseCommand())
     this.map.set("#垃圾", new GarbageCommand())
-  }
+    this.map.set("#one", new OneCommand())
+    this.map.set("#买家秀", new TaobaoCommand())
 
-  private setFireCommand() {
-    this.map.set("#烟花", new FireworksCommand())
-    this.map.set("平安喜乐呀", new FireworksCommand())
-    this.map.set("#炸弹", new BomeCommand())
-    this.map.set("#都是炮", new FireworkMixCommand())
-    // import FortuneGodCommand from './command/fortunegod'
-  }
-
-  private setChpCommand() {
-    const chpCommand = new ChpCommand()
-    this.map.set("#caihongpi", chpCommand)
-    this.map.set("烦", chpCommand)
-    this.map.set("烦躁", chpCommand)
-  }
-
-  private setRemindCommand() {
+    // 提醒功能
     const remindCommand = new RemindCommand()
     this.map.set("#remind", remindCommand)
     this.map.set("#提醒", remindCommand)
+  }
+
+  private setFireCommand() {
+    const fireCommand = new FireworksCommand()
+    this.map.set("#烟花", fireCommand)
+    this.map.set("平安喜乐呀", fireCommand)
+    this.map.set("#炸弹", new BomeCommand())
+    this.map.set("#都是炮", new FireworkMixCommand())
   }
 
   private setHiCommand() {
@@ -93,6 +83,14 @@ export default class MessageHandler {
     this.map.set("嗨", hiCommand)
     this.map.set("#hhsh", new HHSHCommand())
     this.map.set("#朋友", new LimitFriendCommand())
+    this.map.set("#dujitang", new DjtCommand())
+    this.map.set("#ai", new AiCommand())
+
+    // 彩虹屁
+    const chpCommand = new ChpCommand()
+    this.map.set("#caihongpi", chpCommand)
+    this.map.set("烦", chpCommand)
+    this.map.set("烦躁", chpCommand)
   }
 
 }
