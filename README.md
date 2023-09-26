@@ -19,6 +19,10 @@ npm start &!
 
 ### 3 Command
 
+- 讯飞星火 ai 大模型
+```sh
+#ai
+```
 - 天气查询（默认北京）
 ```sh
 #weather
@@ -38,10 +42,6 @@ npm start &!
 - 垃圾分类
 ```sh
 #垃圾
-```
-- one 一个
-```sh
-#one
 ```
 - 彩虹屁
 ```sh
