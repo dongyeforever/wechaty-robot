@@ -10,8 +10,7 @@ import StringUtil from '../util/string-util'
 export default class GarbageCommand implements ICommand {
 
   async execute(message: Message) {
-    const text = message.text()
-    const garbage = text.split(' ')[1] || ''
+    const garbage = StringUtil.getMessageContent(message.text())
     const result = await new Garbage().spider(garbage)
     WechatHelper.sayMessage(result, message)
   }

@@ -34,6 +34,10 @@ export default class RemindCommand implements ICommand {
       }
     }
 
+    if (!this.isValidateDateTime(dateTime)) {
+      WechatHelper.sayMessage(`[爱心] ${dateTime} 已过去`, message)
+      return
+    }
     const content = text.substring(text.indexOf(dateTime) + dateTime.length).trim()
     WechatHelper.sayMessage(`[好的] 将会在 ${dateTime} 提醒你`, message)
 
@@ -49,4 +53,28 @@ export default class RemindCommand implements ICommand {
     })
     Schedule.getInstance().add(task)
   }
+
+  /**
+   * 判断时间是否已过期
+   */
+  private isValidateDateTime(dateTime: string) {
+    return this.getMilliSeconds(dateTime) > Date.now()
+  }
+
+  private getMilliSeconds(dateTime: string) {
+    let milliseconds = 0
+    const regexTime = /^(([0-2][0-3])|([0-1][0-9])):[0-5][0-9]$/ // 15:15
+    const regexDate = /^(\d{4})-(\d{2})-(\d{2}) (([0-2][0-3])|([0-1][0-9])):[0-5][0-9]$/ // 2020-10-20 15:15
+    if (regexTime.test(dateTime)) {
+      const nextDate = new Date()
+      const timeSplit = dateTime.split(':')
+      nextDate.setHours(parseInt(timeSplit[0] || ''))
+      nextDate.setMinutes(parseInt(timeSplit[1] || ''))
+      milliseconds = nextDate.getTime()
+    } else if (regexDate.test(dateTime)) {
+      milliseconds = new Date(dateTime).getTime()
+    }
+    return milliseconds
+  }
+
 }

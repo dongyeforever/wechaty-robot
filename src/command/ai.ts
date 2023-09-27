@@ -4,6 +4,7 @@ import WechatHelper from '../manager/wechat-helper'
 import { WebSocket } from 'ws'
 import * as CryptoJS from 'crypto-js'
 import StringUtil from '../util/string-util'
+
 /**
 * ai
 */
@@ -20,8 +21,7 @@ export default class AiCommand implements ICommand {
   answer: string = ''
 
   async execute(message: Message) {
-    const text = message.text()
-    const prompt = text.split(' ')[1] || ''
+    const prompt = StringUtil.getMessageContent(message.text())    
     if (StringUtil.isNull(prompt)) {
       return
     }

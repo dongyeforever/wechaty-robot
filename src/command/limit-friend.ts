@@ -10,10 +10,9 @@ import StringUtil from '../util/string-util'
 export default class LimitFriendCommand implements ICommand {
 
   async execute(message: Message) {
-    const text = message.text()
     if (message.talker() && message.self()) {
       // 是我自己才有权限执行这个指令
-      let name = text.split(' ')[1] || ''
+      let name = StringUtil.getMessageContent(message.text())
       if (StringUtil.isNull(name)) {
         // 未指定 名字，默认我说话的对方
         this.addContactDirect(message)

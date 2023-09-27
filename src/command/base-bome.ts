@@ -1,3 +1,4 @@
+import StringUtil from '../util/string-util'
 import type ICommand from './command'
 import type { Message, } from 'wechaty'
 
@@ -7,8 +8,7 @@ import type { Message, } from 'wechaty'
 export default abstract class BaseBomeCommand implements ICommand {
 
   async execute(message: Message) {
-    const text = message.text()
-    const timesStr = text.split(' ')[1] || ''
+    const timesStr = StringUtil.getMessageContent(message.text())
     const reg = /^[0-9]+.?[0-9]*$/
     let times = 10
     if (reg.test(timesStr)) {

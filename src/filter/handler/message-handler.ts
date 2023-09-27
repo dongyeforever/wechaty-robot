@@ -19,6 +19,7 @@ import LimitFriendCommand from '../../command/limit-friend'
 import TaobaoCommand from '../../command/taobao'
 import HiCommand from '../../command/hi'
 import AiCommand from '../../command/ai'
+import StringUtil from '../../util/string-util'
 
 export default class MessageHandler {
   private static instance: MessageHandler
@@ -46,7 +47,7 @@ export default class MessageHandler {
     log.info('MessageHandler', message.listener())
     log.info('MessageHandler', '--------------------------------------------------------------------')
 
-    const text = message.text().split(" ")[0] || ''
+    const text = StringUtil.getMessageCommand(message.text())
     const command = this.map.get(text)
     command?.execute(message)
   }
